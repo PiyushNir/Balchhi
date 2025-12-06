@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage, FormDescription } from "@/components/ui/form"
 import { Upload, X, MapPin, Calendar, Tag, FileText, Phone, DollarSign } from "lucide-react"
+import { useAuth } from "@/contexts/auth-context"
+import { supabase } from "@/lib/supabase"
 
 const listingSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters"),
@@ -71,6 +73,7 @@ const districtsByProvince: Record<string, string[]> = {
 
 export default function CreateListingForm({ type = 'lost' }: CreateListingFormProps) {
   const router = useRouter()
+  const { session } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
   const [images, setImages] = useState<File[]>([])
   const [imageUrls, setImageUrls] = useState<string[]>([])
@@ -119,14 +122,73 @@ export default function CreateListingForm({ type = 'lost' }: CreateListingFormPr
   async function onSubmit(values: ListingFormValues) {
     setIsLoading(true)
     try {
-      // TODO: Upload images to Supabase Storage
-      // TODO: Create item via API
-      
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      if (!session) {
+        alert("You must be logged in to create a listing")
+        router.push("/auth/login")
+        return
+      }
 
+      // Build location object
+      const location = {
+        province: values.province,
+        district: values.district,
+        municipality: values.municipality,
+        landmark: values.landmark || "",
+      }
+
+      // Prepare item data
+      const itemData = {
+        type,
+        title: values.title,
+        description: values.description,
+        category_id: values.category,
+        location,
+        date_lost_found: values.date,
+        time_lost_found: values.time || null,
+        reward_amount: values.reward ? parseInt(values.reward) : null,
+        contact_phone: values.contactPhone || null,
+        contact_email: values.contactEmail || null,
+        show_contact: true,
+      }
+
+      // Call API to create item
+      const response = await fetch("/api/items", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify(itemData),
+      })
+
+      if (!response.ok) {
+        const error = await response.json()
+        throw new Error(error.error || "Failed to create listing")
+      }
+
+      const { item } = await response.json()
+
+      // Upload images if any
+      if (images.length > 0) {
+        for (let i = 0; i < images.length; i++) {
+          const file = images[i]
+          const fileName = `${item.id}/${Date.now()}-${i}.jpg`
+          
+          const { error: uploadError } = await supabase.storage
+            .from("item-images")
+            .upload(fileName, file)
+
+          if (uploadError) {
+            console.error("Image upload error:", uploadError)
+          }
+        }
+      }
+
+      alert("Listing created successfully!")
       router.push("/dashboard")
     } catch (error) {
       console.error("Failed to create listing:", error)
+      alert(error instanceof Error ? error.message : "Failed to create listing. Please try again.")
     } finally {
       setIsLoading(false)
     }

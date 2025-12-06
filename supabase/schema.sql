@@ -6,7 +6,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 -- Custom types
-CREATE TYPE user_role AS ENUM ('user', 'verified_user', 'organization', 'admin');
+CREATE TYPE user_role AS ENUM ('individual', 'user', 'verified_user', 'organization', 'admin');
 CREATE TYPE item_status AS ENUM ('active', 'claimed', 'resolved', 'expired', 'deleted');
 CREATE TYPE item_type AS ENUM ('lost', 'found');
 CREATE TYPE claim_status AS ENUM ('pending', 'approved', 'rejected', 'withdrawn');
@@ -47,7 +47,7 @@ CREATE POLICY "Users can update their own profile"
 
 CREATE POLICY "Users can insert their own profile"
   ON profiles FOR INSERT
-  WITH CHECK (auth.uid() = id);
+  WITH CHECK (auth.uid() = id OR auth.role() = 'service_role');
 
 -- ============================================
 -- ORGANIZATIONS TABLE
@@ -488,3 +488,28 @@ $$ LANGUAGE plpgsql;
 
 -- Create bucket for organization logos
 -- INSERT INTO storage.buckets (id, name, public) VALUES ('organizations', 'organizations', true);
+
+-- ============================================
+-- AUTO-CREATE PROFILE ON USER SIGNUP
+-- ============================================
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO public.profiles (id, email, name, role)
+  VALUES (
+    NEW.id,
+    NEW.email,
+    COALESCE(NEW.raw_user_meta_data->>'name', NEW.email),
+    COALESCE(NEW.raw_user_meta_data->>'role', 'user')
+  );
+  RETURN NEW;
+EXCEPTION WHEN OTHERS THEN
+  RAISE LOG 'Error creating profile for user %: %', NEW.id, SQLERRM;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
+
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();

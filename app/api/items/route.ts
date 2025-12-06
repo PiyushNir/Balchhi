@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createServerClient } from '@/lib/supabase'
+import { createServerClient, createServerClientWithAuth } from '@/lib/supabase'
 
 // GET /api/items - List items with filters
 export async function GET(request: NextRequest) {
@@ -89,12 +89,18 @@ export async function GET(request: NextRequest) {
 
 // POST /api/items - Create new item
 export async function POST(request: NextRequest) {
-  const supabase = createServerClient()
-
   try {
     const body = await request.json()
 
-    // Get authenticated user
+    // Get authenticated user from request
+    const authHeader = request.headers.get('authorization')
+    if (!authHeader) {
+      return NextResponse.json({ error: 'Missing authorization header' }, { status: 401 })
+    }
+
+    const token = authHeader.replace('Bearer ', '')
+    const supabase = createServerClientWithAuth(token)
+    
     const { data: { user }, error: authError } = await supabase.auth.getUser()
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
