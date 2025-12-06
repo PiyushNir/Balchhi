@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useAuth } from "@/contexts/auth-context"
 import { useRouter } from "next/navigation"
 import { useOrganization } from "@/contexts/organization-context"
@@ -11,19 +11,103 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import CreateOrgDialog from "@/components/create-org-dialog"
 import TeamManagement from "@/components/team-management"
 import OrgAnalytics from "@/components/org-analytics"
-import { Building, Settings, Users, BarChart3 } from "lucide-react"
+import OrgVerificationStatus from "@/components/org-verification-status"
+import OrgVerificationForm from "@/components/org-verification-form"
+import { Building, Settings, Users, BarChart3, Shield } from "lucide-react"
 
 export default function OrganizationPage() {
   const { user, isLoading } = useAuth()
   const { organizations } = useOrganization()
   const router = useRouter()
 
-  // useEffect must be called before any conditional returns
+  // Verification state management
+  const [verificationStatus, setVerificationStatus] = useState<string>('draft')
+  const [verificationData, setVerificationData] = useState<any>(null)
+  const [showVerificationForm, setShowVerificationForm] = useState(false)
+  const [loadingVerification, setLoadingVerification] = useState(true)
+
+  const userOrganizations = user ? organizations.filter((org) => org.ownerId === user.id) : []
+  const organization = userOrganizations[0]
+  const organizationId = organization?.id
+
   useEffect(() => {
     if (!isLoading && !user) {
       router.push("/login")
     }
   }, [user, isLoading, router])
+
+  // Fetch verification status
+  useEffect(() => {
+    if (!organizationId) {
+      setVerificationData(null)
+      setVerificationStatus('draft')
+      setLoadingVerification(false)
+      return
+    }
+
+    const fetchVerification = async () => {
+      try {
+        setLoadingVerification(true)
+        const response = await fetch(`/api/organizations/${organizationId}/verification`)
+        if (response.ok) {
+          const data = await response.json()
+          if (data.verification) {
+            setVerificationData(data.verification)
+            setVerificationStatus(data.verification.verification_status || 'draft')
+          }
+        }
+      } catch (error) {
+        console.error('Failed to fetch verification:', error)
+      } finally {
+        setLoadingVerification(false)
+      }
+    }
+
+    fetchVerification()
+  }, [organizationId])
+
+  const persistVerification = async (payload: any) => {
+    const response = await fetch(`/api/organizations/${organization.id}/verification`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+
+    if (!response.ok) {
+      throw new Error('Failed to save verification')
+    }
+
+    const result = await response.json()
+    setVerificationData(result.verification)
+    setVerificationStatus(result.verification.verification_status || 'draft')
+    return result.verification
+  }
+
+  const handleSaveVerification = async (data: any) => {
+    try {
+      await persistVerification(data)
+    } catch (error) {
+      console.error('Failed to save verification:', error)
+    }
+  }
+
+  const handleSubmitVerification = async (data: any) => {
+    try {
+      await persistVerification(data)
+      const response = await fetch(`/api/organizations/${organization.id}/verification`, {
+        method: 'PUT'
+      })
+      
+      if (response.ok) {
+        const result = await response.json()
+        setVerificationData(result.verification)
+        setVerificationStatus(result.verification.verification_status || 'submitted')
+        setShowVerificationForm(false)
+      }
+    } catch (error) {
+      console.error('Failed to submit verification:', error)
+    }
+  }
 
   if (isLoading) {
     return (
@@ -46,8 +130,6 @@ export default function OrganizationPage() {
       </div>
     )
   }
-
-  const userOrganizations = organizations.filter((org) => org.ownerId === user.id)
 
   if (userOrganizations.length === 0) {
     return (
@@ -73,8 +155,6 @@ export default function OrganizationPage() {
       </main>
     )
   }
-
-  const organization = userOrganizations[0]
 
   return (
     <main className="min-h-screen flex flex-col bg-[#FFFFFF]">
@@ -115,6 +195,19 @@ export default function OrganizationPage() {
                 <Settings className="w-4 h-4" />
                 Settings
               </TabsTrigger>
+              <TabsTrigger 
+                value="verification"
+                className="data-[state=active]:bg-[#2B2B2B] data-[state=active]:text-[#FFFFFF] rounded-lg px-6 py-2 flex items-center gap-2"
+              >
+                <Shield className="w-4 h-4" />
+                Verification
+                {verificationStatus === 'approved' && (
+                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                )}
+                {verificationStatus === 'draft' && (
+                  <span className="w-2 h-2 bg-yellow-500 rounded-full"></span>
+                )}
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="analytics">
@@ -141,6 +234,38 @@ export default function OrganizationPage() {
                 </CardContent>
               </Card>
             </TabsContent>
+
+            <TabsContent value="verification">
+              {loadingVerification ? (
+                <div className="text-center py-12">
+                  <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-[#D4D4D4] border-t-[#2B2B2B]"></div>
+                  <p className="mt-4 text-[#2B2B2B]">Loading verification status...</p>
+                </div>
+              ) : showVerificationForm ? (
+                <div className="space-y-4">
+                  <button
+                    onClick={() => setShowVerificationForm(false)}
+                    className="text-sm text-[#2B2B2B] hover:underline flex items-center gap-1"
+                  >
+                    Back to status
+                  </button>
+                  <OrgVerificationForm
+                    organizationId={organization.id}
+                    initialData={verificationData}
+                    onSave={handleSaveVerification}
+                    onSubmit={handleSubmitVerification}
+                  />
+                </div>
+              ) : (
+                <OrgVerificationStatus
+                  status={verificationStatus as any}
+                  submittedAt={verificationData?.submitted_at}
+                  approvedAt={verificationData?.approved_at}
+                  rejectionReason={verificationData?.rejection_reason}
+                  onStartVerification={() => setShowVerificationForm(true)}
+                />
+              )}
+            </TabsContent>
           </Tabs>
         </div>
       </div>
@@ -149,4 +274,3 @@ export default function OrganizationPage() {
     </main>
   )
 }
-

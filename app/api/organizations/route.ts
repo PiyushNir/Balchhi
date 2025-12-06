@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createServerClient } from '@/lib/supabase'
+import { createServerClient, createAdminClient } from '@/lib/supabase'
+import { validateOrgEmail } from '@/lib/org-rbac'
 
 // GET /api/organizations - List organizations
 export async function GET(request: NextRequest) {
@@ -8,6 +9,7 @@ export async function GET(request: NextRequest) {
   
   const type = searchParams.get('type')
   const verified = searchParams.get('verified')
+  const approved = searchParams.get('approved')
   const search = searchParams.get('search')
 
   try {
@@ -22,6 +24,11 @@ export async function GET(request: NextRequest) {
 
     if (verified === 'true') {
       query = query.eq('is_verified', true)
+    }
+
+    // Filter by verification status (approved organizations only)
+    if (approved === 'true') {
+      query = query.eq('verification_status', 'approved')
     }
 
     if (search) {
@@ -49,6 +56,7 @@ export async function GET(request: NextRequest) {
 // POST /api/organizations - Register organization
 export async function POST(request: NextRequest) {
   const supabase = createServerClient()
+  const adminClient = createAdminClient()
 
   try {
     const body = await request.json()
@@ -75,6 +83,9 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Validate email domain for organization
+    const emailValidation = await validateOrgEmail(contact_email)
+
     // Check if user already has an organization
     const { data: existingOrg } = await supabase
       .from('organizations')
@@ -89,8 +100,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Create organization
-    const { data: org, error } = await (supabase.from('organizations') as any)
+    // Create organization with new verification fields
+    const { data: org, error } = await (adminClient.from('organizations') as any)
       .insert({
         name,
         type,
@@ -100,6 +111,11 @@ export async function POST(request: NextRequest) {
         location,
         address,
         admin_id: user.id,
+        // New verification fields
+        verification_status: 'draft',
+        can_post_items: false,
+        can_manage_claims: false,
+        trust_score: 0,
       })
       .select()
       .single()
@@ -108,20 +124,25 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
-    // Add admin as member
-    await (supabase.from('organization_members') as any).insert({
+    // Add admin as member with enhanced role
+    await (adminClient.from('organization_members') as any).insert({
       organization_id: org.id,
       user_id: user.id,
       role: 'admin',
+      member_role: 'org_owner',
+      invited_by: user.id,
+      invited_at: new Date().toISOString(),
+      accepted_at: new Date().toISOString(),
+      is_active: true,
     })
 
     // Update user role
-    await (supabase.from('profiles') as any)
+    await (adminClient.from('profiles') as any)
       .update({ role: 'organization' })
       .eq('id', user.id)
 
     // Log activity
-    await (supabase.from('activity_logs') as any).insert({
+    await (adminClient.from('activity_logs') as any).insert({
       user_id: user.id,
       action: 'create',
       entity_type: 'organization',
@@ -129,7 +150,17 @@ export async function POST(request: NextRequest) {
       details: { name, type },
     })
 
-    return NextResponse.json({ organization: org }, { status: 201 })
+    return NextResponse.json({ 
+      organization: org,
+      email_validation: emailValidation,
+      next_steps: [
+        'Complete verification details',
+        'Add primary contact person',
+        'Upload registration documents',
+        'Verify email domain',
+        'Submit for review'
+      ]
+    }, { status: 201 })
   } catch (error) {
     console.error('Error creating organization:', error)
     return NextResponse.json(

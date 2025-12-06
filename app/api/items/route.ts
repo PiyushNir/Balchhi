@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createServerClient, createServerClientWithAuth } from '@/lib/supabase'
+import { createServerClient, createServerClientWithAuth, createAdminClient } from '@/lib/supabase'
+import { canUserPerformAction } from '@/lib/org-rbac'
 
 // GET /api/items - List items with filters
 export async function GET(request: NextRequest) {
@@ -115,12 +116,41 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // If posting on behalf of organization, check permissions
+    if (body.organization_id) {
+      const permResult = await canUserPerformAction(user.id, body.organization_id, 'post_item')
+      if (!permResult.allowed) {
+        return NextResponse.json(
+          { 
+            error: permResult.reason || 'Organization not authorized to post items',
+            org_status: permResult.org_status
+          },
+          { status: 403 }
+        )
+      }
+    }
+
     // Check if user is verified for verified listing
     const { data: profile } = await supabase
       .from('profiles')
       .select('is_verified')
       .eq('id', user.id)
       .single()
+
+    // If organization, also mark as verified listing if org is approved
+    let isVerifiedListing = (profile as any)?.is_verified ?? false
+    if (body.organization_id) {
+      const adminClient = createAdminClient()
+      const { data: org } = await adminClient
+        .from('organizations')
+        .select('verification_status, trust_score')
+        .eq('id', body.organization_id)
+        .single()
+      
+      if (org?.verification_status === 'approved') {
+        isVerifiedListing = true
+      }
+    }
 
     const itemData = {
       type,
@@ -138,7 +168,7 @@ export async function POST(request: NextRequest) {
       organization_id: body.organization_id,
       storage_location: body.storage_location,
       retention_date: body.retention_date,
-      is_verified_listing: (profile as any)?.is_verified ?? false,
+      is_verified_listing: isVerifiedListing,
     }
 
     const { data: item, error } = await (supabase

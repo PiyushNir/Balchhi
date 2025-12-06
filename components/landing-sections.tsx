@@ -474,15 +474,7 @@ export function ForOrganizationsSection() {
               </li>
             </ul>
 
-            <Link href="/dashboard/organization">
-              <Button 
-                size="lg"
-                className="bg-white text-[#2B2B2B] hover:bg-[#D4D4D4] text-lg px-8 py-6 rounded-xl group"
-              >
-                Add to your organisation
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
+            {/* Removed 'Add to your organisation' button as requested. No element needed here. */}
           </div>
 
           <div className="grid grid-cols-2 gap-4">
@@ -564,12 +556,12 @@ export function CTASection() {
           Join thousands of Nepalis who have reunited with their belongings through Balchhi.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link href="/browse">
+          <Link href="/auth/signup">
             <Button 
               size="lg"
               className="bg-white hover:bg-[#D4D4D4] text-[#2B2B2B] text-lg px-10 py-6 rounded-xl shadow-lg"
             >
-              Start finding now
+              Start finding
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </Link>

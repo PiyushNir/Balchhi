@@ -72,6 +72,8 @@ export default function SignupForm() {
     }
   }
 
+  const selectedRole = form.watch('role')
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -131,63 +133,61 @@ export default function SignupForm() {
           )}
         />
 
-        <div className="grid grid-cols-2 gap-4">
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-[#2B2B2B] font-medium">Password</FormLabel>
-                <FormControl>
-                  <div className="relative">
-                    <Input 
-                      placeholder="••••••••" 
-                      type={showPassword ? "text" : "password"} 
-                      className="border-[#D4D4D4] focus:border-[#2B2B2B] focus:ring-[#2B2B2B] pr-10" 
-                      {...field} 
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-[#2B2B2B]/40 hover:text-[#2B2B2B] transition-colors"
-                    >
-                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                    </button>
-                  </div>
-                </FormControl>
-                <FormMessage className="text-red-600" />
-              </FormItem>
-            )}
-          />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-[#2B2B2B] font-medium">Password</FormLabel>
+              <FormControl>
+                <div className="relative">
+                  <Input 
+                    placeholder="Must have at least 6 characters" 
+                    type={showPassword ? "text" : "password"} 
+                    className="border-[#D4D4D4] focus:border-[#2B2B2B] focus:ring-[#2B2B2B] pr-10 placeholder:text-[#2B2B2B]/40" 
+                    {...field} 
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#2B2B2B]/40 hover:text-[#2B2B2B] transition-colors"
+                  >
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+              </FormControl>
+              <FormMessage className="text-red-600" />
+            </FormItem>
+          )}
+        />
 
-          <FormField
-            control={form.control}
-            name="confirmPassword"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-[#2B2B2B] font-medium">Confirm</FormLabel>
-                <FormControl>
-                  <div className="relative">
-                    <Input 
-                      placeholder="••••••••" 
-                      type={showConfirmPassword ? "text" : "password"} 
-                      className="border-[#D4D4D4] focus:border-[#2B2B2B] focus:ring-[#2B2B2B] pr-10" 
-                      {...field} 
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-[#2B2B2B]/40 hover:text-[#2B2B2B] transition-colors"
-                    >
-                      {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                    </button>
-                  </div>
-                </FormControl>
-                <FormMessage className="text-red-600" />
-              </FormItem>
-            )}
-          />
-        </div>
+        <FormField
+          control={form.control}
+          name="confirmPassword"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-[#2B2B2B] font-medium">Confirm Password</FormLabel>
+              <FormControl>
+                <div className="relative">
+                  <Input 
+                    placeholder="Re-enter your password" 
+                    type={showConfirmPassword ? "text" : "password"} 
+                    className="border-[#D4D4D4] focus:border-[#2B2B2B] focus:ring-[#2B2B2B] pr-10 placeholder:text-[#2B2B2B]/40" 
+                    {...field} 
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#2B2B2B]/40 hover:text-[#2B2B2B] transition-colors"
+                  >
+                    {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+              </FormControl>
+              <FormMessage className="text-red-600" />
+            </FormItem>
+          )}
+        />
 
         <FormField
           control={form.control}
@@ -231,6 +231,27 @@ export default function SignupForm() {
             </FormItem>
           )}
         />
+
+        {/* Organization description field, only show if role is organization */}
+        {selectedRole === 'organization' && (
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-[#2B2B2B] font-medium">Organization Description</FormLabel>
+                <FormControl>
+                  <Input 
+                    placeholder="Describe your organization" 
+                    className="border-[#D4D4D4] focus:border-[#2B2B2B] focus:ring-[#2B2B2B] placeholder:text-[#2B2B2B]/40" 
+                    {...field} 
+                  />
+                </FormControl>
+                <FormMessage className="text-red-600" />
+              </FormItem>
+            )}
+          />
+        )}
 
         <Button 
           type="submit" 

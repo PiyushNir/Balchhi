@@ -3,9 +3,27 @@
 import type React from "react"
 import { createContext, useContext, useState, useEffect } from "react"
 import { supabase } from "@/lib/supabase"
-import type { User as SupabaseUser, Session } from "@supabase/supabase-js"
+import type { Session } from "@supabase/supabase-js"
+import type { Database } from "@/lib/database.types"
 
 export type UserRole = "individual" | "organization" | "admin"
+
+type ProfileRow = Database['public']['Tables']['profiles']['Row']
+type DbUserRole = Database['public']['Tables']['profiles']['Row']['role']
+
+// Map database role to auth context role
+function mapDbRoleToUserRole(dbRole: DbUserRole): UserRole {
+  switch (dbRole) {
+    case 'organization':
+      return 'organization'
+    case 'admin':
+      return 'admin'
+    case 'user':
+    case 'verified_user':
+    default:
+      return 'individual'
+  }
+}
 
 export interface User {
   id: string
@@ -47,15 +65,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             .from('profiles')
             .select('*')
             .eq('id', currentSession.user.id)
-            .single()
+            .single() as { data: ProfileRow | null }
           
           if (profile) {
             setUser({
               id: profile.id,
               email: profile.email,
               name: profile.name,
-              role: profile.role || 'individual',
-              createdAt: new Date(profile.created_at),
+              role: mapDbRoleToUserRole(profile.role),
+              createdAt: new Date(profile.created_at || Date.now()),
             })
           }
         }
@@ -77,15 +95,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           .from('profiles')
           .select('*')
           .eq('id', currentSession.user.id)
-          .single()
+          .single() as { data: ProfileRow | null }
         
         if (profile) {
           setUser({
             id: profile.id,
             email: profile.email,
             name: profile.name,
-            role: profile.role || 'individual',
-            createdAt: new Date(profile.created_at),
+            role: mapDbRoleToUserRole(profile.role),
+            createdAt: new Date(profile.created_at || Date.now()),
           })
         }
       } else {
@@ -110,15 +128,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           .from('profiles')
           .select('*')
           .eq('id', data.user.id)
-          .single()
+          .single() as { data: ProfileRow | null }
         
         if (profile) {
           setUser({
             id: profile.id,
             email: profile.email,
             name: profile.name,
-            role: profile.role || 'individual',
-            createdAt: new Date(profile.created_at),
+            role: mapDbRoleToUserRole(profile.role),
+            createdAt: new Date(profile.created_at || Date.now()),
           })
         }
       }

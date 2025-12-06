@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { MapPin, Calendar, Shield, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
 
 export default function BrowsePage() {
   const searchParams = useSearchParams()
@@ -21,9 +22,9 @@ export default function BrowsePage() {
   const query = searchParams.get("q") || ""
 
   useEffect(() => {
-    // Initial load - get all items
+    if (!search) return
     search(query, filters)
-  }, [query])
+  }, [query, filters, search])
 
   const handleFilter = (newFilters: SearchFilters) => {
     setFilters(newFilters)
@@ -147,11 +148,14 @@ export default function BrowsePage() {
                         <CardContent className="p-0">
                           <div className="flex gap-0">
                             {/* Image */}
-                            <div className="h-36 w-36 flex-shrink-0 bg-[#F5F5F5] overflow-hidden">
-                              <img
+                            <div className="relative h-36 w-36 flex-shrink-0 bg-[#F5F5F5] overflow-hidden">
+                              <Image
                                 src={item.image || "/placeholder.svg"}
                                 alt={item.title}
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                fill
+                                sizes="144px"
+                                className="object-cover group-hover:scale-105 transition-transform duration-300"
+                                unoptimized
                               />
                             </div>
 

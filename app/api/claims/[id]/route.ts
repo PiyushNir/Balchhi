@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createServerClient } from '@/lib/supabase'
+import { createServerClient, createAdminClient } from '@/lib/supabase'
+import { canUserPerformAction } from '@/lib/org-rbac'
 
 // PATCH /api/claims/[id] - Update claim status
 export async function PATCH(
@@ -22,7 +23,7 @@ export async function PATCH(
       .from('claims')
       .select(`
         *,
-        item:items(id, user_id, type)
+        item:items(id, user_id, type, organization_id)
       `)
       .eq('id', id)
       .single() as { data: any }
@@ -34,8 +35,15 @@ export async function PATCH(
     // Check permissions
     const isOwner = claim.item?.user_id === user.id
     const isClaimant = claim.claimant_id === user.id
+    
+    // Check if user is org staff for org items
+    let isOrgStaff = false
+    if (claim.item?.organization_id) {
+      const permResult = await canUserPerformAction(user.id, claim.item.organization_id, 'manage_claim')
+      isOrgStaff = permResult.allowed
+    }
 
-    if (!isOwner && !isClaimant) {
+    if (!isOwner && !isClaimant && !isOrgStaff) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
 
@@ -43,9 +51,9 @@ export async function PATCH(
 
     // Validate status transitions
     if (status === 'approved' || status === 'rejected') {
-      if (!isOwner) {
+      if (!isOwner && !isOrgStaff) {
         return NextResponse.json(
-          { error: 'Only item owner can approve/reject claims' },
+          { error: 'Only item owner or organization staff can approve/reject claims' },
           { status: 403 }
         )
       }

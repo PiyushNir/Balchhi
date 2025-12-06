@@ -322,105 +322,94 @@ export default function Hero() {
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
-              
-              <Link href="/dashboard/organization">
-                <Button 
-                  size="lg" 
-                  variant="outline"
-                  className="border-2 border-[#2B2B2B] text-[#2B2B2B] hover:bg-[#2B2B2B] hover:text-white text-lg px-8 py-6 rounded-xl transition-all duration-300 bg-white/90 backdrop-blur-sm group"
+            </motion.div>
+
+            {/* Animated Water Scene - uniform dark color */}
+            <div className="absolute bottom-0 left-0 right-0 h-[45vh] md:h-[50vh] overflow-hidden pointer-events-none z-20">
+              {/* Back wave */}
+              <div 
+                className="absolute bottom-0 h-full animate-wave-slow z-[21]"
+                style={{ width: '200%' }}
+              >
+                <svg
+                  className="absolute bottom-0 w-full h-full"
+                  viewBox="0 0 2880 320"
+                  preserveAspectRatio="none"
                 >
-                  <Building2 className="mr-2 w-5 h-5" />
-                  Add to your organisation
-                </Button>
-              </Link>
+                  <path
+                    fill="#2B2B2B"
+                    fillOpacity="0.7"
+                    d="M0,160L60,170.7C120,181,240,203,360,197.3C480,192,600,160,720,165.3C840,171,960,213,1080,218.7C1200,224,1320,192,1440,181.3C1560,171,1680,181,1800,186.7L1920,192L1980,170.7C2040,181,2160,203,2280,197.3C2400,192,2520,160,2640,165.3C2760,171,2880,192,2880,192L2880,320L0,320Z"
+                  />
+                </svg>
+              </div>
+
+              {/* Middle wave */}
+              <div 
+                className="absolute bottom-0 h-full animate-wave-medium z-[22]"
+                style={{ width: '200%' }}
+              >
+                <svg
+                  className="absolute bottom-0 w-full h-full"
+                  viewBox="0 0 2880 320"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    fill="#2B2B2B"
+                    fillOpacity="0.85"
+                    d="M0,224L60,213.3C120,203,240,181,360,181.3C480,181,600,203,720,218.7C840,235,960,245,1080,234.7C1200,224,1320,192,1440,181.3C1560,171,1680,181,1800,186.7L1920,192L1980,213.3C2040,203,2160,181,2280,181.3C2400,181,2520,203,2640,218.7C2760,235,2880,245,2880,245L2880,320L0,320Z"
+                  />
+                </svg>
+              </div>
+
+              {/* Front wave */}
+              <div 
+                className="absolute bottom-0 h-full animate-wave-fast z-[23]"
+                style={{ width: '200%' }}
+              >
+                <svg
+                  className="absolute bottom-0 w-full h-full"
+                  viewBox="0 0 2880 320"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    fill="#2B2B2B"
+                    d="M0,256L60,261.3C120,267,240,277,360,272C480,267,600,245,720,234.7C840,224,960,224,1080,234.7C1200,245,1320,267,1440,261.3C1560,256,1680,224,1800,208L1920,192L1980,261.3C2040,267,2160,277,2280,272C2400,267,2520,245,2640,234.7C2760,224,2880,224,2880,224L2880,320L0,320Z"
+                  />
+                </svg>
+              </div>
+
+              {/* Solid water base */}
+              <div className="absolute bottom-0 left-0 right-0 h-[12vh] bg-[#2B2B2B] z-[24]" />
+            </div>
+
+            {/* Floating Items on water - passport, wallet, phone, watch, box, keys */}
+            <FloatingPassport />
+            <FloatingPhone />
+            <FloatingWallet />
+            <FloatingBox />
+            <FloatingWatch />
+            <FloatingKeys />
+
+            {/* Scroll indicator */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-30"
+            >
+              <motion.button
+                onClick={scrollToContent}
+                animate={reducedMotion ? {} : { y: [0, 8, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                className="text-white/80 hover:text-white transition-colors"
+                aria-label="Scroll down"
+              >
+                <ChevronDown className="w-8 h-8" />
+              </motion.button>
             </motion.div>
           </div>
         </div>
-
-        {/* Animated Water Scene - uniform dark color */}
-        <div className="absolute bottom-0 left-0 right-0 h-[45vh] md:h-[50vh] overflow-hidden pointer-events-none z-20">
-          {/* Back wave */}
-          <div 
-            className="absolute bottom-0 h-full animate-wave-slow z-[21]"
-            style={{ width: '200%' }}
-          >
-            <svg
-              className="absolute bottom-0 w-full h-full"
-              viewBox="0 0 2880 320"
-              preserveAspectRatio="none"
-            >
-              <path
-                fill="#2B2B2B"
-                fillOpacity="0.7"
-                d="M0,160L60,170.7C120,181,240,203,360,197.3C480,192,600,160,720,165.3C840,171,960,213,1080,218.7C1200,224,1320,192,1440,181.3C1560,171,1680,181,1800,186.7L1920,192L1980,170.7C2040,181,2160,203,2280,197.3C2400,192,2520,160,2640,165.3C2760,171,2880,192,2880,192L2880,320L0,320Z"
-              />
-            </svg>
-          </div>
-
-          {/* Middle wave */}
-          <div 
-            className="absolute bottom-0 h-full animate-wave-medium z-[22]"
-            style={{ width: '200%' }}
-          >
-            <svg
-              className="absolute bottom-0 w-full h-full"
-              viewBox="0 0 2880 320"
-              preserveAspectRatio="none"
-            >
-              <path
-                fill="#2B2B2B"
-                fillOpacity="0.85"
-                d="M0,224L60,213.3C120,203,240,181,360,181.3C480,181,600,203,720,218.7C840,235,960,245,1080,234.7C1200,224,1320,192,1440,181.3C1560,171,1680,181,1800,186.7L1920,192L1980,213.3C2040,203,2160,181,2280,181.3C2400,181,2520,203,2640,218.7C2760,235,2880,245,2880,245L2880,320L0,320Z"
-              />
-            </svg>
-          </div>
-
-          {/* Front wave */}
-          <div 
-            className="absolute bottom-0 h-full animate-wave-fast z-[23]"
-            style={{ width: '200%' }}
-          >
-            <svg
-              className="absolute bottom-0 w-full h-full"
-              viewBox="0 0 2880 320"
-              preserveAspectRatio="none"
-            >
-              <path
-                fill="#2B2B2B"
-                d="M0,256L60,261.3C120,267,240,277,360,272C480,267,600,245,720,234.7C840,224,960,224,1080,234.7C1200,245,1320,267,1440,261.3C1560,256,1680,224,1800,208L1920,192L1980,261.3C2040,267,2160,277,2280,272C2400,267,2520,245,2640,234.7C2760,224,2880,224,2880,224L2880,320L0,320Z"
-              />
-            </svg>
-          </div>
-
-          {/* Solid water base */}
-          <div className="absolute bottom-0 left-0 right-0 h-[12vh] bg-[#2B2B2B] z-[24]" />
-        </div>
-
-        {/* Floating Items on water - passport, wallet, phone, watch, box, keys */}
-        <FloatingPassport />
-        <FloatingPhone />
-        <FloatingWallet />
-        <FloatingBox />
-        <FloatingWatch />
-        <FloatingKeys />
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-30"
-        >
-          <motion.button
-            onClick={scrollToContent}
-            animate={reducedMotion ? {} : { y: [0, 8, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            className="text-white/80 hover:text-white transition-colors"
-            aria-label="Scroll down"
-          >
-            <ChevronDown className="w-8 h-8" />
-          </motion.button>
-        </motion.div>
       </section>
     </>
   )

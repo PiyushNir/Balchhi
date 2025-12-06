@@ -124,24 +124,7 @@ export default function LoginForm() {
           {!isLoading && <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />}
         </Button>
 
-        <div className="relative my-6">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-[#D4D4D4]"></div>
-          </div>
-          <div className="relative flex justify-center text-sm">
-            <span className="px-4 bg-white text-[#2B2B2B]/50">or continue with</span>
-          </div>
-        </div>
-
-        <Button 
-          type="button" 
-          variant="outline" 
-          className="w-full h-12 border-[#D4D4D4] text-[#2B2B2B] hover:bg-[#F5F5F5]"
-          onClick={() => {/* TODO: Magic link */}}
-        >
-          <Mail className="mr-2 w-5 h-5" />
-          Sign in with Magic Link
-        </Button>
+        {/* Removed Magic Link and 'or continue with' */}
       </form>
     </Form>
   )

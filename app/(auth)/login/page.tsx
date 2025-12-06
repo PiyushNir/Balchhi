@@ -38,7 +38,7 @@ export default function LoginPage() {
             <LoginForm />
             <div className="mt-8 text-center">
               <p className="text-[#2B2B2B]/50">
-                Don't have an account?{" "}
+                Don&apos;t have an account?{" "}
                 <Link 
                   href="/signup" 
                   className="text-[#2B2B2B] hover:text-[#2B2B2B]/70 font-semibold"

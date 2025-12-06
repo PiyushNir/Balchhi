@@ -17,7 +17,7 @@ export default function SignupPage() {
               Balchhi
             </span>
           </Link>
-          <p className="text-[#2B2B2B]/60 text-sm mt-4">Join Nepal's trusted Lost & Found community</p>
+          <p className="text-[#2B2B2B]/60 text-sm mt-4">Join Nepal&apos;s trusted Lost &amp; Found community</p>
         </div>
 
         <Card className="border border-[#D4D4D4] shadow-xl bg-white">
@@ -36,6 +36,11 @@ export default function SignupPage() {
                   Sign in
                 </Link>
               </p>
+              <p className="mt-4">
+                <Link href="#organization-signup" className="text-[#2B2B2B] underline font-medium hover:text-[#2B2B2B]/70 transition-colors">
+                  Go to Organization Signup
+                </Link>
+              </p>
             </div>
           </CardContent>
         </Card>
@@ -50,4 +55,3 @@ export default function SignupPage() {
     </div>
   )
 }
-
