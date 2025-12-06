@@ -39,15 +39,15 @@ export default function MyListings({ status }: MyListingsProps) {
       <Card className="bg-white border-0 shadow-md">
         <CardContent className="pt-6">
           <div className="text-center py-12">
-            <div className="w-16 h-16 rounded-full bg-[#6db8bb]/20 flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-[#05647a]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="w-16 h-16 rounded-full bg-[#D4D4D4]/20 flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-[#2B2B2B]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
               </svg>
             </div>
-            <p className="text-[#10375d] font-medium mb-2">No {status} listings yet</p>
-            <p className="text-[#869684] text-sm mb-4">Start by posting a lost or found item</p>
+            <p className="text-[#2B2B2B] font-medium mb-2">No {status} listings yet</p>
+            <p className="text-[#2B2B2B] text-sm mb-4">Start by posting a lost or found item</p>
             <Link href="/listing/create">
-              <Button className="bg-[#10375d] hover:bg-[#05647a] text-[#e0e2d5]">Create Your First Listing</Button>
+              <Button className="bg-[#2B2B2B] hover:bg-[#2B2B2B] text-[#FFFFFF]">Create Your First Listing</Button>
             </Link>
           </div>
         </CardContent>
@@ -61,7 +61,7 @@ export default function MyListings({ status }: MyListingsProps) {
         <Card key={listing.id} className="bg-white border-0 shadow-md hover:shadow-lg transition-shadow">
           <CardContent className="pt-6">
             <div className="flex flex-col md:flex-row gap-6">
-              <div className="h-32 w-32 flex-shrink-0 bg-[#6db8bb]/10 rounded-xl overflow-hidden">
+              <div className="h-32 w-32 flex-shrink-0 bg-[#D4D4D4]/10 rounded-xl overflow-hidden">
                 <img
                   src={listing.image || "/placeholder.svg"}
                   alt={listing.title}
@@ -73,21 +73,21 @@ export default function MyListings({ status }: MyListingsProps) {
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 mb-2">
-                      <h3 className="font-semibold text-lg truncate text-[#10375d]">{listing.title}</h3>
+                      <h3 className="font-semibold text-lg truncate text-[#2B2B2B]">{listing.title}</h3>
                       <Badge 
                         className={`flex-shrink-0 ${
                           listing.type === "lost" 
                             ? "bg-red-100 text-red-700 border-0" 
-                            : "bg-[#6db8bb]/30 text-[#05647a] border-0"
+                            : "bg-[#D4D4D4]/30 text-[#2B2B2B] border-0"
                         }`}
                       >
                         {listing.type === "lost" ? "Lost" : "Found"}
                       </Badge>
                     </div>
 
-                    <p className="text-sm text-[#869684] mb-3">{listing.category}</p>
+                    <p className="text-sm text-[#2B2B2B] mb-3">{listing.category}</p>
 
-                    <div className="space-y-1 text-sm text-[#05647a]">
+                    <div className="space-y-1 text-sm text-[#2B2B2B]">
                       <div className="flex items-center gap-2">
                         <MapPin className="w-4 h-4" />
                         <span>{listing.location}</span>
@@ -105,11 +105,11 @@ export default function MyListings({ status }: MyListingsProps) {
 
                   <div className="flex gap-2 flex-shrink-0">
                     <Link href={`/listing/${listing.id}`}>
-                      <Button variant="outline" size="sm" className="border-[#6db8bb] text-[#05647a] hover:bg-[#6db8bb]/10">
+                      <Button variant="outline" size="sm" className="border-[#D4D4D4] text-[#2B2B2B] hover:bg-[#D4D4D4]/10">
                         View
                       </Button>
                     </Link>
-                    <Button variant="outline" size="icon" className="border-[#6db8bb] text-[#05647a] hover:bg-[#6db8bb]/10">
+                    <Button variant="outline" size="icon" className="border-[#D4D4D4] text-[#2B2B2B] hover:bg-[#D4D4D4]/10">
                       <Edit2 className="w-4 h-4" />
                     </Button>
                     <Button
@@ -129,3 +129,4 @@ export default function MyListings({ status }: MyListingsProps) {
     </div>
   )
 }
+

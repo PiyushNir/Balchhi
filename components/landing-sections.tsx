@@ -248,9 +248,9 @@ export function HowItWorksSection() {
   return (
     <section className="py-24 px-6 md:px-8 bg-[#2B2B2B] relative overflow-hidden">
       {/* Floating items for underwater effect */}
-      <FloatingKeysSVG id="hiw-keys" className="w-28 h-22 opacity-70" style={{ top: '10%', left: '5%' }} />
-      <FloatingWalletSVG id="hiw-wallet" className="w-24 h-18 opacity-65" style={{ top: '60%', right: '8%' }} />
-      <FloatingGlassesSVG id="hiw-glasses" className="w-36 h-20 opacity-60" style={{ bottom: '15%', left: '15%' }} />
+      <FloatingWalletSVG id="hiw-wallet-left" className="w-20 h-16" style={{ top: '10%', left: '-2%' }} />
+      <FloatingWalletSVG id="hiw-wallet" className="w-24 h-18" style={{ top: '60%', right: '8%' }} />
+      <FloatingGlassesSVG id="hiw-glasses" className="w-36 h-20" style={{ bottom: '15%', left: '15%' }} />
       
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="text-center mb-16">
@@ -315,8 +315,8 @@ export function TrustedVerificationSection() {
   return (
     <section className="py-24 px-6 md:px-8 bg-[#2B2B2B] relative overflow-hidden">
       {/* Floating items */}
-      <FloatingPhoneSVG id="verify-phone" className="w-20 h-32 opacity-65" style={{ top: '5%', right: '10%' }} />
-      <FloatingWatchSVG id="verify-watch" className="w-24 h-32 opacity-70" style={{ bottom: '20%', left: '3%' }} />
+      <FloatingPhoneSVG id="verify-phone" className="w-20 h-32" style={{ top: '5%', right: '10%' }} />
+      <FloatingWatchSVG id="verify-watch" className="w-24 h-32" style={{ bottom: '20%', left: '3%' }} />
       
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="text-center mb-16">
@@ -377,9 +377,8 @@ export function DeliverySection() {
   return (
     <section className="py-24 px-6 md:px-8 bg-[#2B2B2B] relative overflow-hidden">
       {/* Floating items */}
-      <FloatingKeysSVG id="delivery-keys" className="w-32 h-24 opacity-65" style={{ top: '15%', left: '8%' }} />
-      <FloatingBoxSVG id="delivery-box" className="w-24 h-20 opacity-60" style={{ top: '40%', right: '5%' }} />
-      <FloatingWalletSVG id="delivery-wallet" className="w-28 h-22 opacity-70" style={{ bottom: '10%', right: '15%' }} />
+      <FloatingPhoneSVG id="delivery-phone" className="w-20 h-32" style={{ top: '15%', left: '8%' }} />
+      <FloatingWalletSVG id="delivery-wallet" className="w-28 h-22" style={{ bottom: '10%', right: '15%' }} />
       
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="text-center mb-16">
@@ -434,8 +433,8 @@ export function ForOrganizationsSection() {
   return (
     <section className="py-24 px-6 md:px-8 bg-[#2B2B2B] relative overflow-hidden">
       {/* Floating items */}
-      <FloatingGlassesSVG id="org-glasses" className="w-36 h-20 opacity-65" style={{ top: '8%', left: '3%' }} />
-      <FloatingPhoneSVG id="org-phone" className="w-18 h-28 opacity-70" style={{ bottom: '25%', right: '5%' }} />
+      <FloatingGlassesSVG id="org-glasses" className="w-36 h-20" style={{ top: '8%', left: '3%' }} />
+      <FloatingPhoneSVG id="org-phone" className="w-18 h-28" style={{ bottom: '25%', right: '5%' }} />
       
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -448,7 +447,7 @@ export function ForOrganizationsSection() {
               className="text-3xl md:text-4xl text-white mb-6"
               style={{ fontFamily: "'Calmingly', cursive" }}
             >
-              Manage lost & found for your organization
+              Manage lost and found for your organization
             </h2>
             <p className="text-lg text-[#B3B3B3] mb-8 leading-relaxed">
               Join Nepal's largest network of trusted organizations. Help reunite 
@@ -514,8 +513,8 @@ export function StatsSection() {
   return (
     <section className="py-20 px-6 md:px-8 bg-[#2B2B2B] relative overflow-hidden">
       {/* Floating items */}
-      <FloatingWatchSVG className="w-22 h-28 opacity-65" style={{ top: '20%', right: '10%' }} />
-      <FloatingWalletSVG className="w-26 h-20 opacity-70" style={{ bottom: '30%', left: '5%' }} />
+      <FloatingWatchSVG className="w-22 h-28" style={{ top: '20%', right: '10%' }} />
+      <FloatingWalletSVG className="w-26 h-20" style={{ bottom: '30%', left: '5%' }} />
       
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -548,9 +547,9 @@ export function CTASection() {
   return (
     <section className="py-24 px-6 md:px-8 bg-[#2B2B2B] relative overflow-hidden">
       {/* Floating items */}
-      <FloatingKeysSVG className="w-32 h-26 opacity-60" style={{ top: '10%', left: '5%' }} />
-      <FloatingPhoneSVG className="w-18 h-28 opacity-65" style={{ bottom: '15%', right: '8%' }} />
-      <FloatingGlassesSVG className="w-30 h-18 opacity-70" style={{ top: '50%', right: '25%' }} />
+      <FloatingKeysSVG className="w-32 h-26" style={{ top: '10%', left: '5%' }} />
+      <FloatingWatchSVG className="w-24 h-32" style={{ bottom: '15%', right: '8%' }} />
+      <FloatingGlassesSVG className="w-30 h-18" style={{ top: '50%', right: '25%' }} />
       
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -597,8 +596,8 @@ export function ContactSection() {
   return (
     <section className="py-24 px-6 md:px-8 bg-[#2B2B2B] relative overflow-hidden">
       {/* Floating items */}
-      <FloatingWatchSVG className="w-14 h-18 opacity-45" style={{ top: '15%', right: '5%' }} />
-      <FloatingBoxSVG className="w-16 h-14 opacity-40" style={{ bottom: '20%', left: '8%' }} />
+      <FloatingWatchSVG className="w-14 h-18" style={{ top: '15%', right: '5%' }} />
+      <FloatingBoxSVG className="w-16 h-14" style={{ bottom: '20%', left: '8%' }} />
       
       <motion.div
         ref={ref}
@@ -648,3 +647,4 @@ export function ContactSection() {
     </section>
   )
 }
+

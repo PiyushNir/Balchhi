@@ -16,6 +16,7 @@ interface CatchableItemProps {
   floatDelay?: number
   className?: string
   collisionRadius?: number // Default 80 for hero, 100 for underwater sections
+  underwaterOpacity?: number // Opacity when floating (0-1), default 0.6 for underwater effect
 }
 
 export function CatchableFloatingItem({ 
@@ -27,7 +28,8 @@ export function CatchableFloatingItem({
   floatDuration = 4,
   floatDelay = 0,
   className = "",
-  collisionRadius = 80
+  collisionRadius = 80,
+  underwaterOpacity = 0.6
 }: CatchableItemProps) {
   const { hookPosition, catchItem, isItemCaught, getItemOffset } = useHook()
   const itemRef = useRef<HTMLDivElement>(null)
@@ -74,14 +76,15 @@ export function CatchableFloatingItem({
     }
   }, [id, getItemOffset, caughtPosition])
   
-  // Caught state - follow the hook
+  // Caught state - follow the hook (fully opaque when out of water)
   if (isCaught && caughtPosition) {
     return (
       <motion.div
         className={`fixed z-[9998] pointer-events-none ${className}`}
         style={{
-          left: hookPosition.x + caughtPosition.x - 40,
-          top: hookPosition.y + caughtPosition.y - 40,
+          left: hookPosition.x - 40,
+          top: hookPosition.y - 10,
+          opacity: 1, // Fully opaque when caught/out of water
         }}
         animate={{ 
           rotate: [-5, 5, -5],
@@ -98,7 +101,7 @@ export function CatchableFloatingItem({
     )
   }
   
-  // Normal floating state
+  // Normal floating state (opacity controlled by underwaterOpacity prop)
   const positionStyle: React.CSSProperties = { ...style }
   if (initialPosition) {
     if (initialPosition.bottom) positionStyle.bottom = initialPosition.bottom
@@ -111,7 +114,10 @@ export function CatchableFloatingItem({
     <motion.div
       ref={itemRef}
       className={`absolute z-10 pointer-events-none ${className}`}
-      style={positionStyle}
+      style={{
+        ...positionStyle,
+        opacity: underwaterOpacity, // Use prop for opacity (1 = above water, 0.6 = underwater)
+      }}
       animate={floatAnimation}
       transition={{ 
         duration: floatDuration, 
@@ -124,3 +130,4 @@ export function CatchableFloatingItem({
     </motion.div>
   )
 }
+

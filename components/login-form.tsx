@@ -60,14 +60,14 @@ export default function LoginForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-[#10375d]">Email</FormLabel>
+              <FormLabel className="text-[#2B2B2B]">Email</FormLabel>
               <FormControl>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#869684]" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#2B2B2B]/40" />
                   <Input 
                     placeholder="your@email.com" 
                     type="email" 
-                    className="pl-10 h-12 border-[#869684]/30 focus:border-[#10375d]"
+                    className="pl-10 h-12 border-[#D4D4D4] focus:border-[#2B2B2B]"
                     {...field} 
                   />
                 </div>
@@ -83,21 +83,21 @@ export default function LoginForm() {
           render={({ field }) => (
             <FormItem>
               <div className="flex items-center justify-between">
-                <FormLabel className="text-[#10375d]">Password</FormLabel>
+                <FormLabel className="text-[#2B2B2B]">Password</FormLabel>
                 <Link 
                   href="/forgot-password" 
-                  className="text-sm text-[#05647a] hover:text-[#10375d]"
+                  className="text-sm text-[#2B2B2B]/60 hover:text-[#2B2B2B]"
                 >
                   Forgot password?
                 </Link>
               </div>
               <FormControl>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#869684]" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#2B2B2B]/40" />
                   <Input 
                     placeholder="Enter your password" 
                     type="password" 
-                    className="pl-10 h-12 border-[#869684]/30 focus:border-[#10375d]"
+                    className="pl-10 h-12 border-[#D4D4D4] focus:border-[#2B2B2B]"
                     {...field} 
                   />
                 </div>
@@ -109,7 +109,7 @@ export default function LoginForm() {
 
         <Button 
           type="submit" 
-          className="w-full h-12 bg-[#10375d] hover:bg-[#10375d]/90 text-[#e0e2d5] text-base font-semibold group" 
+          className="w-full h-12 bg-[#2B2B2B] hover:bg-[#2B2B2B]/90 text-white text-base font-semibold group" 
           disabled={isLoading}
         >
           {isLoading ? "Signing in..." : "Sign In"}
@@ -118,17 +118,17 @@ export default function LoginForm() {
 
         <div className="relative my-6">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-[#869684]/20"></div>
+            <div className="w-full border-t border-[#D4D4D4]"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-4 bg-white text-[#869684]">or continue with</span>
+            <span className="px-4 bg-white text-[#2B2B2B]/50">or continue with</span>
           </div>
         </div>
 
         <Button 
           type="button" 
           variant="outline" 
-          className="w-full h-12 border-[#869684]/30 text-[#10375d] hover:bg-[#e0e2d5]"
+          className="w-full h-12 border-[#D4D4D4] text-[#2B2B2B] hover:bg-[#F5F5F5]"
           onClick={() => {/* TODO: Magic link */}}
         >
           <Mail className="mr-2 w-5 h-5" />
@@ -138,3 +138,4 @@ export default function LoginForm() {
     </Form>
   )
 }
+

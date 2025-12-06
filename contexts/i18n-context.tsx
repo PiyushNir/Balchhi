@@ -300,9 +300,10 @@ export function LanguageSwitcher() {
   return (
     <button
       onClick={() => setLanguage(language === 'en' ? 'ne' : 'en')}
-      className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#05647a] text-[#e0e2d5] text-sm font-medium hover:bg-[#10375d] transition-colors"
+      className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#2B2B2B] text-[#FFFFFF] text-sm font-medium hover:bg-[#2B2B2B] transition-colors"
     >
       {language === 'en' ? 'नेपाली' : 'English'}
     </button>
   )
 }
+

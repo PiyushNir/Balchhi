@@ -74,11 +74,11 @@ export default function SignupForm() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-[#10375d] font-medium">Full Name</FormLabel>
+              <FormLabel className="text-[#2B2B2B] font-medium">Full Name</FormLabel>
               <FormControl>
                 <Input 
                   placeholder="Your full name" 
-                  className="border-[#6db8bb] focus:border-[#05647a] focus:ring-[#05647a]" 
+                  className="border-[#D4D4D4] focus:border-[#2B2B2B] focus:ring-[#2B2B2B]" 
                   {...field} 
                 />
               </FormControl>
@@ -92,12 +92,12 @@ export default function SignupForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-[#10375d] font-medium">Email</FormLabel>
+              <FormLabel className="text-[#2B2B2B] font-medium">Email</FormLabel>
               <FormControl>
                 <Input 
                   placeholder="your@email.com" 
                   type="email" 
-                  className="border-[#6db8bb] focus:border-[#05647a] focus:ring-[#05647a]" 
+                  className="border-[#D4D4D4] focus:border-[#2B2B2B] focus:ring-[#2B2B2B]" 
                   {...field} 
                 />
               </FormControl>
@@ -111,12 +111,12 @@ export default function SignupForm() {
           name="phone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-[#10375d] font-medium">Phone Number <span className="text-[#869684] font-normal">(optional)</span></FormLabel>
+              <FormLabel className="text-[#2B2B2B] font-medium">Phone Number <span className="text-[#2B2B2B]/50 font-normal">(optional)</span></FormLabel>
               <FormControl>
                 <Input 
                   placeholder="+977 98XXXXXXXX" 
                   type="tel" 
-                  className="border-[#6db8bb] focus:border-[#05647a] focus:ring-[#05647a]" 
+                  className="border-[#D4D4D4] focus:border-[#2B2B2B] focus:ring-[#2B2B2B]" 
                   {...field} 
                 />
               </FormControl>
@@ -131,12 +131,12 @@ export default function SignupForm() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[#10375d] font-medium">Password</FormLabel>
+                <FormLabel className="text-[#2B2B2B] font-medium">Password</FormLabel>
                 <FormControl>
                   <Input 
                     placeholder="••••••••" 
                     type="password" 
-                    className="border-[#6db8bb] focus:border-[#05647a] focus:ring-[#05647a]" 
+                    className="border-[#D4D4D4] focus:border-[#2B2B2B] focus:ring-[#2B2B2B]" 
                     {...field} 
                   />
                 </FormControl>
@@ -150,12 +150,12 @@ export default function SignupForm() {
             name="confirmPassword"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[#10375d] font-medium">Confirm</FormLabel>
+                <FormLabel className="text-[#2B2B2B] font-medium">Confirm</FormLabel>
                 <FormControl>
                   <Input 
                     placeholder="••••••••" 
                     type="password" 
-                    className="border-[#6db8bb] focus:border-[#05647a] focus:ring-[#05647a]" 
+                    className="border-[#D4D4D4] focus:border-[#2B2B2B] focus:ring-[#2B2B2B]" 
                     {...field} 
                   />
                 </FormControl>
@@ -170,36 +170,36 @@ export default function SignupForm() {
           name="role"
           render={({ field }) => (
             <FormItem className="pt-2">
-              <FormLabel className="text-[#10375d] font-medium">Account Type</FormLabel>
+              <FormLabel className="text-[#2B2B2B] font-medium">Account Type</FormLabel>
               <FormControl>
                 <RadioGroup value={field.value} onValueChange={field.onChange} className="grid grid-cols-2 gap-3 pt-2">
                   <label 
                     htmlFor="individual" 
                     className={`flex flex-col p-4 rounded-xl border-2 cursor-pointer transition-all ${
                       field.value === 'individual' 
-                        ? 'border-[#05647a] bg-[#6db8bb]/10' 
-                        : 'border-[#e0e2d5] hover:border-[#6db8bb]'
+                        ? 'border-[#2B2B2B] bg-[#2B2B2B]/5' 
+                        : 'border-[#D4D4D4] hover:border-[#2B2B2B]/50'
                     }`}
                   >
                     <div className="flex items-center gap-2">
-                      <RadioGroupItem value="individual" id="individual" className="border-[#05647a] text-[#05647a]" />
-                      <span className="text-sm font-semibold text-[#10375d]">Individual</span>
+                      <RadioGroupItem value="individual" id="individual" className="border-[#2B2B2B] text-[#2B2B2B]" />
+                      <span className="text-sm font-semibold text-[#2B2B2B]">Individual</span>
                     </div>
-                    <p className="text-xs text-[#869684] mt-1 ml-6">Post and find lost items</p>
+                    <p className="text-xs text-[#2B2B2B]/50 mt-1 ml-6">Post and find lost items</p>
                   </label>
                   <label 
                     htmlFor="organization" 
                     className={`flex flex-col p-4 rounded-xl border-2 cursor-pointer transition-all ${
                       field.value === 'organization' 
-                        ? 'border-[#05647a] bg-[#6db8bb]/10' 
-                        : 'border-[#e0e2d5] hover:border-[#6db8bb]'
+                        ? 'border-[#2B2B2B] bg-[#2B2B2B]/5' 
+                        : 'border-[#D4D4D4] hover:border-[#2B2B2B]/50'
                     }`}
                   >
                     <div className="flex items-center gap-2">
-                      <RadioGroupItem value="organization" id="organization" className="border-[#05647a] text-[#05647a]" />
-                      <span className="text-sm font-semibold text-[#10375d]">Organization</span>
+                      <RadioGroupItem value="organization" id="organization" className="border-[#2B2B2B] text-[#2B2B2B]" />
+                      <span className="text-sm font-semibold text-[#2B2B2B]">Organization</span>
                     </div>
-                    <p className="text-xs text-[#869684] mt-1 ml-6">Manage team & listings</p>
+                    <p className="text-xs text-[#2B2B2B]/50 mt-1 ml-6">Manage team & listings</p>
                   </label>
                 </RadioGroup>
               </FormControl>
@@ -210,7 +210,7 @@ export default function SignupForm() {
 
         <Button 
           type="submit" 
-          className="w-full bg-[#10375d] hover:bg-[#05647a] text-[#e0e2d5] font-semibold py-5 mt-4 transition-colors" 
+          className="w-full bg-[#2B2B2B] hover:bg-[#2B2B2B]/90 text-white font-semibold py-5 mt-4 transition-colors" 
           disabled={isLoading}
         >
           {isLoading ? (
@@ -229,3 +229,4 @@ export default function SignupForm() {
     </Form>
   )
 }
+

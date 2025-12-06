@@ -137,7 +137,7 @@ export default function CreateListingForm({ type = 'lost' }: CreateListingFormPr
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         {/* Basic Details */}
         <div className="space-y-6">
-          <div className="flex items-center gap-3 text-[#10375d]">
+          <div className="flex items-center gap-3 text-[#2B2B2B]">
             <Tag className="w-5 h-5" />
             <h3 className="font-bold text-lg">Basic Details</h3>
           </div>
@@ -147,15 +147,15 @@ export default function CreateListingForm({ type = 'lost' }: CreateListingFormPr
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[#10375d]">Item Title</FormLabel>
+                <FormLabel className="text-[#2B2B2B]">Item Title</FormLabel>
                 <FormControl>
                   <Input 
                     placeholder="e.g., Silver Wedding Ring with Diamond" 
-                    className="border-[#869684]/30 focus:border-[#10375d]"
+                    className="border-[#2B2B2B]/30 focus:border-[#2B2B2B]"
                     {...field} 
                   />
                 </FormControl>
-                <FormDescription className="text-[#869684]">
+                <FormDescription className="text-[#2B2B2B]">
                   Be specific about what you {type === 'lost' ? 'lost' : 'found'}
                 </FormDescription>
                 <FormMessage />
@@ -168,11 +168,11 @@ export default function CreateListingForm({ type = 'lost' }: CreateListingFormPr
             name="category"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[#10375d]">Category</FormLabel>
+                <FormLabel className="text-[#2B2B2B]">Category</FormLabel>
                 <FormControl>
                   <select
                     {...field}
-                    className="flex h-11 w-full rounded-lg border border-[#869684]/30 bg-white px-4 py-2 text-base focus:outline-none focus:border-[#10375d] focus:ring-2 focus:ring-[#10375d]/20"
+                    className="flex h-11 w-full rounded-lg border border-[#2B2B2B]/30 bg-white px-4 py-2 text-base focus:outline-none focus:border-[#2B2B2B] focus:ring-2 focus:ring-[#2B2B2B]/20"
                   >
                     <option value="">Select a category</option>
                     {categories.map((cat) => (
@@ -190,7 +190,7 @@ export default function CreateListingForm({ type = 'lost' }: CreateListingFormPr
 
         {/* Location */}
         <div className="space-y-6">
-          <div className="flex items-center gap-3 text-[#10375d]">
+          <div className="flex items-center gap-3 text-[#2B2B2B]">
             <MapPin className="w-5 h-5" />
             <h3 className="font-bold text-lg">Location</h3>
           </div>
@@ -201,7 +201,7 @@ export default function CreateListingForm({ type = 'lost' }: CreateListingFormPr
               name="province"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#10375d]">Province</FormLabel>
+                  <FormLabel className="text-[#2B2B2B]">Province</FormLabel>
                   <FormControl>
                     <select
                       {...field}
@@ -210,7 +210,7 @@ export default function CreateListingForm({ type = 'lost' }: CreateListingFormPr
                         setSelectedProvince(e.target.value)
                         form.setValue('district', '')
                       }}
-                      className="flex h-11 w-full rounded-lg border border-[#869684]/30 bg-white px-4 py-2 text-base focus:outline-none focus:border-[#10375d] focus:ring-2 focus:ring-[#10375d]/20"
+                      className="flex h-11 w-full rounded-lg border border-[#2B2B2B]/30 bg-white px-4 py-2 text-base focus:outline-none focus:border-[#2B2B2B] focus:ring-2 focus:ring-[#2B2B2B]/20"
                     >
                       <option value="">Select province</option>
                       {provinces.map((prov) => (
@@ -228,12 +228,12 @@ export default function CreateListingForm({ type = 'lost' }: CreateListingFormPr
               name="district"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#10375d]">District</FormLabel>
+                  <FormLabel className="text-[#2B2B2B]">District</FormLabel>
                   <FormControl>
                     <select
                       {...field}
                       disabled={!selectedProvince}
-                      className="flex h-11 w-full rounded-lg border border-[#869684]/30 bg-white px-4 py-2 text-base focus:outline-none focus:border-[#10375d] focus:ring-2 focus:ring-[#10375d]/20 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      className="flex h-11 w-full rounded-lg border border-[#2B2B2B]/30 bg-white px-4 py-2 text-base focus:outline-none focus:border-[#2B2B2B] focus:ring-2 focus:ring-[#2B2B2B]/20 disabled:bg-gray-100 disabled:cursor-not-allowed"
                     >
                       <option value="">Select district</option>
                       {selectedProvince && districtsByProvince[selectedProvince]?.map((dist) => (
@@ -253,11 +253,11 @@ export default function CreateListingForm({ type = 'lost' }: CreateListingFormPr
               name="municipality"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#10375d]">Municipality / Metro</FormLabel>
+                  <FormLabel className="text-[#2B2B2B]">Municipality / Metro</FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="e.g., Kathmandu Metropolitan City" 
-                      className="border-[#869684]/30 focus:border-[#10375d]"
+                      className="border-[#2B2B2B]/30 focus:border-[#2B2B2B]"
                       {...field} 
                     />
                   </FormControl>
@@ -271,11 +271,11 @@ export default function CreateListingForm({ type = 'lost' }: CreateListingFormPr
               name="landmark"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#10375d]">Landmark (Optional)</FormLabel>
+                  <FormLabel className="text-[#2B2B2B]">Landmark (Optional)</FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="e.g., Near Swayambhunath Temple" 
-                      className="border-[#869684]/30 focus:border-[#10375d]"
+                      className="border-[#2B2B2B]/30 focus:border-[#2B2B2B]"
                       {...field} 
                     />
                   </FormControl>
@@ -288,7 +288,7 @@ export default function CreateListingForm({ type = 'lost' }: CreateListingFormPr
 
         {/* Date & Time */}
         <div className="space-y-6">
-          <div className="flex items-center gap-3 text-[#10375d]">
+          <div className="flex items-center gap-3 text-[#2B2B2B]">
             <Calendar className="w-5 h-5" />
             <h3 className="font-bold text-lg">When</h3>
           </div>
@@ -299,13 +299,13 @@ export default function CreateListingForm({ type = 'lost' }: CreateListingFormPr
               name="date"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#10375d]">
+                  <FormLabel className="text-[#2B2B2B]">
                     Date {type === 'lost' ? 'Lost' : 'Found'}
                   </FormLabel>
                   <FormControl>
                     <Input 
                       type="date" 
-                      className="border-[#869684]/30 focus:border-[#10375d]"
+                      className="border-[#2B2B2B]/30 focus:border-[#2B2B2B]"
                       {...field} 
                     />
                   </FormControl>
@@ -319,11 +319,11 @@ export default function CreateListingForm({ type = 'lost' }: CreateListingFormPr
               name="time"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#10375d]">Approximate Time (Optional)</FormLabel>
+                  <FormLabel className="text-[#2B2B2B]">Approximate Time (Optional)</FormLabel>
                   <FormControl>
                     <Input 
                       type="time" 
-                      className="border-[#869684]/30 focus:border-[#10375d]"
+                      className="border-[#2B2B2B]/30 focus:border-[#2B2B2B]"
                       {...field} 
                     />
                   </FormControl>
@@ -336,7 +336,7 @@ export default function CreateListingForm({ type = 'lost' }: CreateListingFormPr
 
         {/* Description */}
         <div className="space-y-6">
-          <div className="flex items-center gap-3 text-[#10375d]">
+          <div className="flex items-center gap-3 text-[#2B2B2B]">
             <FileText className="w-5 h-5" />
             <h3 className="font-bold text-lg">Description</h3>
           </div>
@@ -349,11 +349,11 @@ export default function CreateListingForm({ type = 'lost' }: CreateListingFormPr
                 <FormControl>
                   <textarea
                     placeholder="Describe the item in detail. Include color, size, brand, any unique marks, identifying features, etc."
-                    className="flex min-h-32 w-full rounded-lg border border-[#869684]/30 bg-white px-4 py-3 text-base focus:outline-none focus:border-[#10375d] focus:ring-2 focus:ring-[#10375d]/20 resize-none"
+                    className="flex min-h-32 w-full rounded-lg border border-[#2B2B2B]/30 bg-white px-4 py-3 text-base focus:outline-none focus:border-[#2B2B2B] focus:ring-2 focus:ring-[#2B2B2B]/20 resize-none"
                     {...field}
                   />
                 </FormControl>
-                <FormDescription className="text-[#869684]">
+                <FormDescription className="text-[#2B2B2B]">
                   {field.value.length}/1000 characters
                 </FormDescription>
                 <FormMessage />
@@ -364,14 +364,14 @@ export default function CreateListingForm({ type = 'lost' }: CreateListingFormPr
 
         {/* Photos */}
         <div className="space-y-6">
-          <div className="flex items-center gap-3 text-[#10375d]">
+          <div className="flex items-center gap-3 text-[#2B2B2B]">
             <Upload className="w-5 h-5" />
             <h3 className="font-bold text-lg">Photos</h3>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             {imageUrls.map((url, index) => (
-              <div key={index} className="relative aspect-square rounded-lg overflow-hidden bg-[#e0e2d5]">
+              <div key={index} className="relative aspect-square rounded-lg overflow-hidden bg-[#FFFFFF]">
                 <img src={url} alt={`Upload ${index + 1}`} className="w-full h-full object-cover" />
                 <button
                   type="button"
@@ -384,9 +384,9 @@ export default function CreateListingForm({ type = 'lost' }: CreateListingFormPr
             ))}
             
             {images.length < 5 && (
-              <label className="aspect-square rounded-lg border-2 border-dashed border-[#869684]/30 flex flex-col items-center justify-center cursor-pointer hover:border-[#10375d] hover:bg-[#6db8bb]/10 transition-colors">
-                <Upload className="w-8 h-8 text-[#869684] mb-2" />
-                <span className="text-sm text-[#869684]">Add photo</span>
+              <label className="aspect-square rounded-lg border-2 border-dashed border-[#2B2B2B]/30 flex flex-col items-center justify-center cursor-pointer hover:border-[#2B2B2B] hover:bg-[#D4D4D4]/10 transition-colors">
+                <Upload className="w-8 h-8 text-[#2B2B2B] mb-2" />
+                <span className="text-sm text-[#2B2B2B]">Add photo</span>
                 <input
                   type="file"
                   accept="image/*"
@@ -397,14 +397,14 @@ export default function CreateListingForm({ type = 'lost' }: CreateListingFormPr
               </label>
             )}
           </div>
-          <p className="text-sm text-[#869684]">
+          <p className="text-sm text-[#2B2B2B]">
             Add up to 5 photos to help identify the item
           </p>
         </div>
 
         {/* Contact & Reward */}
         <div className="space-y-6">
-          <div className="flex items-center gap-3 text-[#10375d]">
+          <div className="flex items-center gap-3 text-[#2B2B2B]">
             <Phone className="w-5 h-5" />
             <h3 className="font-bold text-lg">Contact & Reward</h3>
           </div>
@@ -415,12 +415,12 @@ export default function CreateListingForm({ type = 'lost' }: CreateListingFormPr
               name="contactPhone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#10375d]">Phone Number (Optional)</FormLabel>
+                  <FormLabel className="text-[#2B2B2B]">Phone Number (Optional)</FormLabel>
                   <FormControl>
                     <Input 
                       type="tel"
                       placeholder="+977 98XXXXXXXX" 
-                      className="border-[#869684]/30 focus:border-[#10375d]"
+                      className="border-[#2B2B2B]/30 focus:border-[#2B2B2B]"
                       {...field} 
                     />
                   </FormControl>
@@ -434,12 +434,12 @@ export default function CreateListingForm({ type = 'lost' }: CreateListingFormPr
               name="contactEmail"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#10375d]">Email (Optional)</FormLabel>
+                  <FormLabel className="text-[#2B2B2B]">Email (Optional)</FormLabel>
                   <FormControl>
                     <Input 
                       type="email"
                       placeholder="your@email.com" 
-                      className="border-[#869684]/30 focus:border-[#10375d]"
+                      className="border-[#2B2B2B]/30 focus:border-[#2B2B2B]"
                       {...field} 
                     />
                   </FormControl>
@@ -455,7 +455,7 @@ export default function CreateListingForm({ type = 'lost' }: CreateListingFormPr
               name="reward"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#10375d]">
+                  <FormLabel className="text-[#2B2B2B]">
                     <div className="flex items-center gap-2">
                       <DollarSign className="w-4 h-4" />
                       Reward Amount (Optional)
@@ -465,11 +465,11 @@ export default function CreateListingForm({ type = 'lost' }: CreateListingFormPr
                     <Input 
                       type="number"
                       placeholder="NPR 500" 
-                      className="border-[#869684]/30 focus:border-[#10375d]"
+                      className="border-[#2B2B2B]/30 focus:border-[#2B2B2B]"
                       {...field} 
                     />
                   </FormControl>
-                  <FormDescription className="text-[#869684]">
+                  <FormDescription className="text-[#2B2B2B]">
                     Offer a reward to encourage the finder
                   </FormDescription>
                   <FormMessage />
@@ -485,14 +485,14 @@ export default function CreateListingForm({ type = 'lost' }: CreateListingFormPr
             type="button" 
             variant="outline" 
             onClick={() => router.back()}
-            className="border-[#869684] text-[#869684] hover:bg-[#e0e2d5]"
+            className="border-[#2B2B2B] text-[#2B2B2B] hover:bg-[#FFFFFF]"
           >
             Cancel
           </Button>
           <Button 
             type="submit" 
             disabled={isLoading} 
-            className="flex-1 bg-[#10375d] hover:bg-[#10375d]/90 text-[#e0e2d5]"
+            className="flex-1 bg-[#2B2B2B] hover:bg-[#2B2B2B]/90 text-[#FFFFFF]"
           >
             {isLoading ? "Creating..." : `Post ${type === 'lost' ? 'Lost' : 'Found'} Item`}
           </Button>
@@ -501,3 +501,4 @@ export default function CreateListingForm({ type = 'lost' }: CreateListingFormPr
     </Form>
   )
 }
+

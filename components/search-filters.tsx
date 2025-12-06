@@ -63,10 +63,10 @@ export default function SearchFiltersComponent({ onFilter, isLoading }: SearchFi
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 p-5 bg-white rounded-xl shadow-md border-0">
         <div className="flex items-center gap-2 mb-4">
-          <div className="w-8 h-8 rounded-lg bg-[#6db8bb]/20 flex items-center justify-center">
-            <Filter className="w-4 h-4 text-[#05647a]" />
+          <div className="w-8 h-8 rounded-lg bg-[#2B2B2B]/10 flex items-center justify-center">
+            <Filter className="w-4 h-4 text-[#2B2B2B]/70" />
           </div>
-          <h3 className="font-semibold text-[#10375d]">Filters</h3>
+          <h3 className="font-semibold text-[#2B2B2B]">Filters</h3>
         </div>
 
         <FormField
@@ -74,35 +74,35 @@ export default function SearchFiltersComponent({ onFilter, isLoading }: SearchFi
           name="type"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm text-[#10375d] font-medium">Item Type</FormLabel>
+              <FormLabel className="text-sm text-[#2B2B2B] font-medium">Item Type</FormLabel>
               <FormControl>
                 <RadioGroup value={field.value} onValueChange={field.onChange} className="space-y-2">
                   <label 
                     htmlFor="all" 
                     className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all ${
-                      field.value === 'all' ? 'bg-[#6db8bb]/10 border border-[#05647a]' : 'border border-transparent hover:bg-[#e0e2d5]/50'
+                      field.value === 'all' ? 'bg-[#2B2B2B]/5 border border-[#2B2B2B]' : 'border border-transparent hover:bg-[#F5F5F5]'
                     }`}
                   >
-                    <RadioGroupItem value="all" id="all" className="border-[#05647a] text-[#05647a]" />
-                    <span className="text-sm text-[#10375d]">All Items</span>
+                    <RadioGroupItem value="all" id="all" className="border-[#2B2B2B] text-[#2B2B2B]" />
+                    <span className="text-sm text-[#2B2B2B]">All Items</span>
                   </label>
                   <label 
                     htmlFor="lost" 
                     className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all ${
-                      field.value === 'lost' ? 'bg-red-50 border border-red-300' : 'border border-transparent hover:bg-[#e0e2d5]/50'
+                      field.value === 'lost' ? 'bg-red-50 border border-red-300' : 'border border-transparent hover:bg-[#F5F5F5]'
                     }`}
                   >
                     <RadioGroupItem value="lost" id="lost" className="border-red-500 text-red-500" />
-                    <span className="text-sm text-[#10375d]">Lost</span>
+                    <span className="text-sm text-[#2B2B2B]">Lost</span>
                   </label>
                   <label 
                     htmlFor="found" 
                     className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all ${
-                      field.value === 'found' ? 'bg-[#6db8bb]/10 border border-[#05647a]' : 'border border-transparent hover:bg-[#e0e2d5]/50'
+                      field.value === 'found' ? 'bg-green-50 border border-green-300' : 'border border-transparent hover:bg-[#F5F5F5]'
                     }`}
                   >
-                    <RadioGroupItem value="found" id="found" className="border-[#05647a] text-[#05647a]" />
-                    <span className="text-sm text-[#10375d]">Found</span>
+                    <RadioGroupItem value="found" id="found" className="border-green-500 text-green-500" />
+                    <span className="text-sm text-[#2B2B2B]">Found</span>
                   </label>
                 </RadioGroup>
               </FormControl>
@@ -115,16 +115,16 @@ export default function SearchFiltersComponent({ onFilter, isLoading }: SearchFi
           name="category"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm text-[#10375d] font-medium">Category</FormLabel>
+              <FormLabel className="text-sm text-[#2B2B2B] font-medium">Category</FormLabel>
               <Select value={field.value} onValueChange={field.onChange}>
                 <FormControl>
-                  <SelectTrigger className="h-10 border-[#6db8bb] text-[#10375d] focus:border-[#05647a]">
+                  <SelectTrigger className="h-10 border-[#D4D4D4] text-[#2B2B2B] focus:border-[#2B2B2B]">
                     <SelectValue />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent className="border-[#6db8bb]">
+                <SelectContent className="border-[#D4D4D4]">
                   {categories.map((cat) => (
-                    <SelectItem key={cat} value={cat} className="text-[#10375d] focus:bg-[#6db8bb]/10">
+                    <SelectItem key={cat} value={cat} className="text-[#2B2B2B] focus:bg-[#2B2B2B]/5">
                       {cat}
                     </SelectItem>
                   ))}
@@ -139,12 +139,12 @@ export default function SearchFiltersComponent({ onFilter, isLoading }: SearchFi
           name="location"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm text-[#10375d] font-medium">Location</FormLabel>
+              <FormLabel className="text-sm text-[#2B2B2B] font-medium">Location</FormLabel>
               <FormControl>
                 <Input 
                   placeholder="Kathmandu, Pokhara..." 
                   {...field} 
-                  className="h-10 border-[#6db8bb] text-[#10375d] placeholder:text-[#869684] focus:border-[#05647a]" 
+                  className="h-10 border-[#D4D4D4] text-[#2B2B2B] placeholder:text-[#2B2B2B]/40 focus:border-[#2B2B2B]" 
                 />
               </FormControl>
             </FormItem>
@@ -156,17 +156,17 @@ export default function SearchFiltersComponent({ onFilter, isLoading }: SearchFi
           name="sortBy"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm text-[#10375d] font-medium">Sort By</FormLabel>
+              <FormLabel className="text-sm text-[#2B2B2B] font-medium">Sort By</FormLabel>
               <Select value={field.value} onValueChange={field.onChange}>
                 <FormControl>
-                  <SelectTrigger className="h-10 border-[#6db8bb] text-[#10375d] focus:border-[#05647a]">
+                  <SelectTrigger className="h-10 border-[#D4D4D4] text-[#2B2B2B] focus:border-[#2B2B2B]">
                     <SelectValue />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent className="border-[#6db8bb]">
-                  <SelectItem value="relevant" className="text-[#10375d] focus:bg-[#6db8bb]/10">Most Relevant</SelectItem>
-                  <SelectItem value="recent" className="text-[#10375d] focus:bg-[#6db8bb]/10">Most Recent</SelectItem>
-                  <SelectItem value="popular" className="text-[#10375d] focus:bg-[#6db8bb]/10">Most Viewed</SelectItem>
+                <SelectContent className="border-[#D4D4D4]">
+                  <SelectItem value="relevant" className="text-[#2B2B2B] focus:bg-[#2B2B2B]/5">Most Relevant</SelectItem>
+                  <SelectItem value="recent" className="text-[#2B2B2B] focus:bg-[#2B2B2B]/5">Most Recent</SelectItem>
+                  <SelectItem value="popular" className="text-[#2B2B2B] focus:bg-[#2B2B2B]/5">Most Viewed</SelectItem>
                 </SelectContent>
               </Select>
             </FormItem>
@@ -177,7 +177,7 @@ export default function SearchFiltersComponent({ onFilter, isLoading }: SearchFi
           <Button 
             type="submit" 
             disabled={isLoading} 
-            className="flex-1 bg-[#10375d] hover:bg-[#05647a] text-[#e0e2d5]"
+            className="flex-1 bg-[#2B2B2B] hover:bg-[#2B2B2B]/90 text-white"
           >
             {isLoading ? "Searching..." : "Apply Filters"}
           </Button>
@@ -186,7 +186,7 @@ export default function SearchFiltersComponent({ onFilter, isLoading }: SearchFi
             variant="outline" 
             size="icon" 
             onClick={() => form.reset()}
-            className="border-[#6db8bb] text-[#05647a] hover:bg-[#6db8bb]/10"
+            className="border-[#D4D4D4] text-[#2B2B2B] hover:bg-[#F5F5F5]"
           >
             <X className="w-4 h-4" />
           </Button>
@@ -195,3 +195,4 @@ export default function SearchFiltersComponent({ onFilter, isLoading }: SearchFi
     </Form>
   )
 }
+

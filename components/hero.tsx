@@ -30,6 +30,28 @@ function CardboardBoxSVG({ className }: { className?: string }) {
   )
 }
 
+// Passport/ID SVG Component
+function PassportSVG({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 70 90" className={className}>
+      {/* Passport cover */}
+      <rect x="5" y="5" width="60" height="80" fill="#1E3A5F" rx="4" />
+      {/* Passport spine */}
+      <rect x="5" y="5" width="8" height="80" fill="#162D4D" rx="2" />
+      {/* Gold emblem circle */}
+      <circle cx="35" cy="40" r="18" fill="none" stroke="#D4AF37" strokeWidth="2" />
+      {/* Inner design */}
+      <circle cx="35" cy="40" r="12" fill="none" stroke="#D4AF37" strokeWidth="1" />
+      {/* Center star/emblem */}
+      <polygon points="35,30 37,36 43,36 38,40 40,46 35,43 30,46 32,40 27,36 33,36" fill="#D4AF37" />
+      {/* PASSPORT text area */}
+      <rect x="15" y="65" width="40" height="6" fill="#D4AF37" opacity="0.8" rx="1" />
+      {/* Top decoration */}
+      <rect x="20" y="12" width="30" height="3" fill="#D4AF37" opacity="0.6" rx="1" />
+    </svg>
+  )
+}
+
 // Keys SVG Component
 function KeysSVG({ className }: { className?: string }) {
   return (
@@ -108,12 +130,12 @@ function WatchSVG({ className }: { className?: string }) {
   )
 }
 
-// Floating Wallet - main large item
+// Floating Wallet - moved to far left for easier catching
 function FloatingWallet() {
   return (
     <CatchableFloatingItem
       id="wallet"
-      initialPosition={{ right: '15%', bottom: 'calc(10vh)' }}
+      initialPosition={{ left: '-5%', bottom: 'calc(6vh)' }}
       floatAnimation={{ y: [0, -8, 0, -5, 0, -10, 0], rotate: [-1, 2, -1, 3, -2, 1, -1] }}
       floatDuration={4}
     >
@@ -122,42 +144,61 @@ function FloatingWallet() {
   )
 }
 
-// Floating Keys - left side (closest to hook!)
+// Floating Passport - left side (closest to hook!)
+function FloatingPassport() {
+  return (
+    <CatchableFloatingItem
+      id="passport"
+      initialPosition={{ left: '8%', bottom: 'calc(15vh)' }}
+      floatAnimation={{ y: [0, -5, 0, -3, 0, -6, 0], rotate: [1, -2, 1, -3, 2, -1, 1] }}
+      floatDuration={5}
+      floatDelay={0.5}
+      collisionRadius={120}
+      underwaterOpacity={1}
+    >
+      <PassportSVG className="w-20 h-26 md:w-28 md:h-36 lg:w-32 lg:h-42 drop-shadow-2xl" />
+    </CatchableFloatingItem>
+  )
+}
+
+// Floating Keys - one instance in center-right (keeping only 1 in hero)
 function FloatingKeys() {
   return (
     <CatchableFloatingItem
       id="keys"
-      initialPosition={{ left: '5%', bottom: 'calc(12vh)' }}
+      initialPosition={{ right: '25%', bottom: 'calc(14vh)' }}
       floatAnimation={{ y: [0, -5, 0, -3, 0, -6, 0], rotate: [1, -2, 1, -3, 2, -1, 1] }}
       floatDuration={5}
       floatDelay={0.5}
+      underwaterOpacity={1}
     >
       <KeysSVG className="w-20 h-16 md:w-28 md:h-24 lg:w-36 lg:h-28 drop-shadow-2xl" />
     </CatchableFloatingItem>
   )
 }
 
-// Floating Phone - center-left
+// Floating Phone - left-center for easier catching
 function FloatingPhone() {
   return (
     <CatchableFloatingItem
       id="phone"
-      initialPosition={{ left: '30%', bottom: 'calc(14vh)' }}
+      initialPosition={{ left: '22%', bottom: 'calc(16vh)' }}
       floatAnimation={{ y: [0, -6, 0, -4, 0, -8, 0], rotate: [-2, 1, -2, 3, -1, 2, -2] }}
       floatDuration={4.5}
       floatDelay={1}
+      underwaterOpacity={1}
     >
       <PhoneSVG className="w-16 h-24 md:w-20 md:h-32 lg:w-24 lg:h-40 drop-shadow-2xl" />
     </CatchableFloatingItem>
   )
 }
 
-// Floating Watch - far right
+// Floating Watch - right side
 function FloatingWatch() {
   return (
     <CatchableFloatingItem
       id="watch"
-      initialPosition={{ right: '3%', bottom: 'calc(18vh)' }}
+      initialPosition={{ right: '8%', bottom: 'calc(12vh)' }}
       floatAnimation={{ y: [0, -4, 0, -2, 0, -5, 0], rotate: [2, -1, 2, -2, 1, -1, 2] }}
       floatDuration={3.5}
       floatDelay={0.8}
@@ -176,6 +217,7 @@ function FloatingBox() {
       floatAnimation={{ y: [0, -3, 0, -5, 0, -4, 0], rotate: [-1, 3, -1, 2, -2, 1, -1] }}
       floatDuration={5.5}
       floatDelay={1.5}
+      underwaterOpacity={1}
     >
       <CardboardBoxSVG className="w-20 h-16 md:w-28 md:h-24 lg:w-36 lg:h-28 drop-shadow-2xl" />
     </CatchableFloatingItem>
@@ -261,7 +303,7 @@ export default function Hero() {
               className="text-xs md:text-sm lg:text-base text-[#2B2B2B]/60 mb-8 max-w-md mx-auto leading-relaxed italic"
             >
               Nepal's trusted platform to reunite people with their belongings.
-              From Kathmandu to Pokhara.
+              From Kathmandu to Pokhara. We connect finders to seekers.
             </motion.p>
 
             {/* CTA Buttons */}
@@ -354,12 +396,13 @@ export default function Hero() {
           <div className="absolute bottom-0 left-0 right-0 h-[12vh] bg-[#2B2B2B] z-[24]" />
         </div>
 
-        {/* Floating Items on water - keys, wallet, phone, watch, box */}
-        <FloatingKeys />
+        {/* Floating Items on water - passport, wallet, phone, watch, box, keys */}
+        <FloatingPassport />
         <FloatingPhone />
         <FloatingWallet />
         <FloatingBox />
         <FloatingWatch />
+        <FloatingKeys />
 
         {/* Scroll indicator */}
         <motion.div
@@ -382,3 +425,4 @@ export default function Hero() {
     </>
   )
 }
+

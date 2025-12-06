@@ -51,7 +51,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
-  themeColor: "#10375d",
+  themeColor: "#2B2B2B",
 }
 
 export default function RootLayout({
@@ -60,8 +60,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={plusJakartaSans.variable}>
-      <body className="font-sans antialiased">
+    <html lang="en" className={plusJakartaSans.variable} style={{ backgroundColor: '#FFFFFF' }}>
+      <body className="font-sans antialiased" style={{ backgroundColor: '#FFFFFF' }}>
         <Suspense>
           <AuthProvider>
             <VerificationProvider>
@@ -76,3 +76,4 @@ export default function RootLayout({
     </html>
   )
 }
+

@@ -199,3 +199,4 @@ export default function TeamManagement({ organization }: TeamManagementProps) {
     </div>
   )
 }
+

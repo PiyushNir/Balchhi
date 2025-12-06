@@ -18,10 +18,11 @@ export default function CreateListingButton() {
 
   return (
     <Link href={user ? "/listing/create" : "/login"} onClick={handleClick}>
-      <Button className="bg-[#10375d] hover:bg-[#05647a] text-[#e0e2d5] font-semibold px-6 py-5 rounded-xl shadow-md transition-all hover:shadow-lg">
+      <Button className="bg-[#2B2B2B] hover:bg-[#2B2B2B] text-[#FFFFFF] font-semibold px-6 py-5 rounded-xl shadow-md transition-all hover:shadow-lg">
         <Plus className="w-5 h-5 mr-2" />
         Post Item
       </Button>
     </Link>
   )
 }
+

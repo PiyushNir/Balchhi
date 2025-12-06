@@ -80,15 +80,15 @@ export default function ClaimItemDialog({ listingId, listingTitle }: ClaimItemDi
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="w-full bg-[#05647a] hover:bg-[#10375d] text-[#e0e2d5] font-semibold">
+        <Button className="w-full bg-[#2B2B2B] hover:bg-[#2B2B2B] text-[#FFFFFF] font-semibold">
           <Shield className="w-4 h-4 mr-2" />
           This is my item
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md border-0 shadow-xl">
         <DialogHeader>
-          <DialogTitle className="text-[#10375d] text-xl">Claim This Item</DialogTitle>
-          <DialogDescription className="text-[#869684]">
+          <DialogTitle className="text-[#2B2B2B] text-xl">Claim This Item</DialogTitle>
+          <DialogDescription className="text-[#2B2B2B]">
             Help us verify that "{listingTitle}" belongs to you
           </DialogDescription>
         </DialogHeader>
@@ -100,11 +100,11 @@ export default function ClaimItemDialog({ listingId, listingTitle }: ClaimItemDi
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#10375d] font-medium">Why is this your item?</FormLabel>
+                  <FormLabel className="text-[#2B2B2B] font-medium">Why is this your item?</FormLabel>
                   <FormControl>
                     <textarea
                       placeholder="Describe specific details that prove this is your item (color, marks, where you lost it, etc.)"
-                      className="flex min-h-28 w-full rounded-xl border-2 border-[#6db8bb] bg-transparent px-4 py-3 text-base text-[#10375d] placeholder:text-[#869684] focus-visible:outline-none focus-visible:border-[#05647a] focus-visible:ring-[#05647a]/20 focus-visible:ring-4 transition-all"
+                      className="flex min-h-28 w-full rounded-xl border-2 border-[#D4D4D4] bg-transparent px-4 py-3 text-base text-[#2B2B2B] placeholder:text-[#2B2B2B] focus-visible:outline-none focus-visible:border-[#2B2B2B] focus-visible:ring-[#2B2B2B]/20 focus-visible:ring-4 transition-all"
                       {...field}
                     />
                   </FormControl>
@@ -113,9 +113,9 @@ export default function ClaimItemDialog({ listingId, listingTitle }: ClaimItemDi
               )}
             />
 
-            <div className="space-y-2 p-4 bg-[#6db8bb]/10 rounded-xl text-sm border border-[#6db8bb]/30">
-              <p className="font-semibold text-[#10375d]">Before you claim:</p>
-              <ul className="list-disc list-inside space-y-1 text-[#05647a]">
+            <div className="space-y-2 p-4 bg-[#D4D4D4]/10 rounded-xl text-sm border border-[#D4D4D4]/30">
+              <p className="font-semibold text-[#2B2B2B]">Before you claim:</p>
+              <ul className="list-disc list-inside space-y-1 text-[#2B2B2B]">
                 <li>Be honest and specific in your description</li>
                 <li>Provide details only you would know</li>
                 <li>Be prepared for verification questions</li>
@@ -127,14 +127,14 @@ export default function ClaimItemDialog({ listingId, listingTitle }: ClaimItemDi
                 type="button" 
                 variant="outline" 
                 onClick={() => setOpen(false)} 
-                className="flex-1 border-[#6db8bb] text-[#05647a] hover:bg-[#6db8bb]/10"
+                className="flex-1 border-[#D4D4D4] text-[#2B2B2B] hover:bg-[#D4D4D4]/10"
               >
                 Cancel
               </Button>
               <Button 
                 type="submit" 
                 disabled={isLoading} 
-                className="flex-1 bg-[#10375d] hover:bg-[#05647a] text-[#e0e2d5]"
+                className="flex-1 bg-[#2B2B2B] hover:bg-[#2B2B2B] text-[#FFFFFF]"
               >
                 {isLoading ? (
                   <span className="flex items-center gap-2">
@@ -155,3 +155,4 @@ export default function ClaimItemDialog({ listingId, listingTitle }: ClaimItemDi
     </Dialog>
   )
 }
+

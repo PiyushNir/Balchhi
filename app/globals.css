@@ -12,11 +12,11 @@
 
 /* KhojPayo - Nepal Lost & Found Color Palette */
 /* 
-  Primary Deep Blue: #10375d
-  Secondary Teal: #05647a
-  Accent Teal: #6db8bb
-  Light Background: #e0e2d5
-  Muted Neutral: #869684
+  Monochrome Palette:
+  White: #FFFFFF
+  Dark: #2B2B2B
+  Light Gray: #D4D4D4
+  Light: #F5F5F5
 */
 
 :root {
@@ -24,48 +24,48 @@
   --font-display: 'Calmingly', cursive;
   --font-body: var(--font-jakarta), system-ui, sans-serif;
   
-  /* KhojPayo Color Palette */
-  --kp-primary: #10375d;
-  --kp-secondary: #05647a;
-  --kp-accent: #6db8bb;
-  --kp-background: #6db8bb;
-  --kp-light: #e0e2d5;
-  --kp-muted: #869684;
+  /* Monochrome Color Palette */
+  --kp-primary: #2B2B2B;
+  --kp-secondary: #2B2B2B;
+  --kp-accent: #2B2B2B;
+  --kp-background: #FFFFFF;
+  --kp-light: #F5F5F5;
+  --kp-muted: #D4D4D4;
   
-  /* Theme Variables mapped to KhojPayo palette */
-  --background: #6db8bb;
-  --foreground: #e0e2d5;
+  /* Theme Variables mapped to monochrome palette */
+  --background: #FFFFFF;
+  --foreground: #2B2B2B;
   --card: #ffffff;
-  --card-foreground: #10375d;
+  --card-foreground: #2B2B2B;
   --popover: #ffffff;
-  --popover-foreground: #10375d;
-  --primary: #10375d;
-  --primary-foreground: #e0e2d5;
-  --secondary: #05647a;
-  --secondary-foreground: #e0e2d5;
-  --muted: #869684;
-  --muted-foreground: #e0e2d5;
-  --accent: #6db8bb;
-  --accent-foreground: #10375d;
+  --popover-foreground: #2B2B2B;
+  --primary: #2B2B2B;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F5F5F5;
+  --secondary-foreground: #2B2B2B;
+  --muted: #D4D4D4;
+  --muted-foreground: #2B2B2B;
+  --accent: #F5F5F5;
+  --accent-foreground: #2B2B2B;
   --destructive: #dc2626;
   --destructive-foreground: #ffffff;
-  --border: #869684;
+  --border: #D4D4D4;
   --input: #ffffff;
-  --ring: #10375d;
-  --chart-1: #10375d;
-  --chart-2: #05647a;
-  --chart-3: #6db8bb;
-  --chart-4: #869684;
-  --chart-5: #e0e2d5;
+  --ring: #2B2B2B;
+  --chart-1: #2B2B2B;
+  --chart-2: #555555;
+  --chart-3: #888888;
+  --chart-4: #AAAAAA;
+  --chart-5: #D4D4D4;
   --radius: 0.75rem;
-  --sidebar: #10375d;
-  --sidebar-foreground: #e0e2d5;
-  --sidebar-primary: #6db8bb;
-  --sidebar-primary-foreground: #10375d;
-  --sidebar-accent: #05647a;
-  --sidebar-accent-foreground: #e0e2d5;
-  --sidebar-border: #05647a;
-  --sidebar-ring: #6db8bb;
+  --sidebar: #2B2B2B;
+  --sidebar-foreground: #FFFFFF;
+  --sidebar-primary: #FFFFFF;
+  --sidebar-primary-foreground: #2B2B2B;
+  --sidebar-accent: #555555;
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border: #555555;
+  --sidebar-ring: #FFFFFF;
 }
 
 @theme inline {
@@ -147,5 +147,6 @@ html {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--kp-secondary);
+  background: var(--kp-primary);
 }
+

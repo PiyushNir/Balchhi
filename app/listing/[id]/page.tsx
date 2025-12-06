@@ -33,15 +33,15 @@ export default function ListingDetailPage() {
   const isOwner = user?.id === listing.posterId
 
   return (
-    <main className="min-h-screen flex flex-col bg-[#e0e2d5]">
+    <main className="min-h-screen flex flex-col bg-[#FFFFFF]">
       <Header />
 
-      <div className="flex-1 py-8 px-4 md:px-8">
+      <div className="flex-1 pt-24 pb-8 px-4 md:px-8">
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-3 gap-8">
             {/* Main content */}
             <div className="md:col-span-2 space-y-6">
-              <div className="relative rounded-2xl overflow-hidden bg-[#6db8bb]/10 h-96 shadow-lg">
+              <div className="relative rounded-2xl overflow-hidden bg-[#D4D4D4]/10 h-96 shadow-lg">
                 <img
                   src={listing.image || "/placeholder.svg"}
                   alt={listing.title}
@@ -51,16 +51,16 @@ export default function ListingDetailPage() {
                   className={`absolute top-4 right-4 px-4 py-1.5 text-sm font-semibold ${
                     listing.type === "lost" 
                       ? "bg-red-500 text-white border-0" 
-                      : "bg-[#05647a] text-[#e0e2d5] border-0"
+                      : "bg-[#2B2B2B] text-[#FFFFFF] border-0"
                   }`}
                 >
                   {listing.type === "lost" ? "Lost Item" : "Found Item"}
                 </Badge>
                 <div className="absolute bottom-4 right-4 flex gap-2">
-                  <Button size="icon" variant="secondary" className="bg-white/90 hover:bg-white text-[#10375d]">
+                  <Button size="icon" variant="secondary" className="bg-white/90 hover:bg-white text-[#2B2B2B]">
                     <Share2 className="w-4 h-4" />
                   </Button>
-                  <Button size="icon" variant="secondary" className="bg-white/90 hover:bg-white text-[#10375d]">
+                  <Button size="icon" variant="secondary" className="bg-white/90 hover:bg-white text-[#2B2B2B]">
                     <Flag className="w-4 h-4" />
                   </Button>
                 </div>
@@ -70,27 +70,27 @@ export default function ListingDetailPage() {
                 <CardHeader className="pb-4">
                   <div className="flex items-start justify-between">
                     <div>
-                      <CardTitle className="text-2xl text-[#10375d]">{listing.title}</CardTitle>
-                      <CardDescription className="text-[#05647a] mt-1">{listing.category}</CardDescription>
+                      <CardTitle className="text-2xl text-[#2B2B2B]">{listing.title}</CardTitle>
+                      <CardDescription className="text-[#2B2B2B] mt-1">{listing.category}</CardDescription>
                     </div>
-                    <span className="text-sm text-[#869684]">{listing.views} views</span>
+                    <span className="text-sm text-[#2B2B2B]">{listing.views} views</span>
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <p className="text-[#10375d] leading-relaxed">{listing.description}</p>
+                  <p className="text-[#2B2B2B] leading-relaxed">{listing.description}</p>
 
-                  <div className="space-y-3 pt-4 border-t border-[#e0e2d5]">
+                  <div className="space-y-3 pt-4 border-t border-[#FFFFFF]">
                     <div className="flex items-center gap-3 text-sm">
-                      <div className="w-8 h-8 rounded-lg bg-[#6db8bb]/20 flex items-center justify-center">
-                        <MapPin className="w-4 h-4 text-[#05647a]" />
+                      <div className="w-8 h-8 rounded-lg bg-[#D4D4D4]/20 flex items-center justify-center">
+                        <MapPin className="w-4 h-4 text-[#2B2B2B]" />
                       </div>
-                      <span className="text-[#10375d]">{listing.location}</span>
+                      <span className="text-[#2B2B2B]">{listing.location}</span>
                     </div>
                     <div className="flex items-center gap-3 text-sm">
-                      <div className="w-8 h-8 rounded-lg bg-[#6db8bb]/20 flex items-center justify-center">
-                        <Calendar className="w-4 h-4 text-[#05647a]" />
+                      <div className="w-8 h-8 rounded-lg bg-[#D4D4D4]/20 flex items-center justify-center">
+                        <Calendar className="w-4 h-4 text-[#2B2B2B]" />
                       </div>
-                      <span className="text-[#10375d]">{new Date(listing.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                      <span className="text-[#2B2B2B]">{new Date(listing.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>
                     </div>
                   </div>
                 </CardContent>
@@ -101,23 +101,23 @@ export default function ListingDetailPage() {
             <div className="space-y-4">
               <Card className="bg-white border-0 shadow-md">
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-lg text-[#10375d]">Posted by</CardTitle>
+                  <CardTitle className="text-lg text-[#2B2B2B]">Posted by</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-[#6db8bb]/20 flex items-center justify-center">
-                      <User className="w-6 h-6 text-[#05647a]" />
+                    <div className="w-12 h-12 rounded-full bg-[#D4D4D4]/20 flex items-center justify-center">
+                      <User className="w-6 h-6 text-[#2B2B2B]" />
                     </div>
                     <div>
-                      <p className="font-semibold text-[#10375d]">{listing.postedBy}</p>
-                      <div className="flex items-center gap-1 text-xs text-[#05647a]">
+                      <p className="font-semibold text-[#2B2B2B]">{listing.postedBy}</p>
+                      <div className="flex items-center gap-1 text-xs text-[#2B2B2B]">
                         <Shield className="w-3 h-3" />
                         <span>Verified Member</span>
                       </div>
                     </div>
                   </div>
 
-                  <Button className="w-full bg-[#10375d] hover:bg-[#05647a] text-[#e0e2d5]">
+                  <Button className="w-full bg-[#2B2B2B] hover:bg-[#2B2B2B] text-[#FFFFFF]">
                     <MessageCircle className="w-4 h-4 mr-2" />
                     Contact Poster
                   </Button>
@@ -126,7 +126,7 @@ export default function ListingDetailPage() {
 
               <Card className="bg-white border-0 shadow-md">
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-lg text-[#10375d]">
+                  <CardTitle className="text-lg text-[#2B2B2B]">
                     {isOwner ? "Claims & Verification" : "Is this your item?"}
                   </CardTitle>
                 </CardHeader>
@@ -134,14 +134,14 @@ export default function ListingDetailPage() {
                   {isOwner ? (
                     <div className="space-y-3">
                       <div className="text-center py-6">
-                        <div className="w-12 h-12 rounded-full bg-[#6db8bb]/20 flex items-center justify-center mx-auto mb-3">
-                          <Shield className="w-6 h-6 text-[#05647a]" />
+                        <div className="w-12 h-12 rounded-full bg-[#D4D4D4]/20 flex items-center justify-center mx-auto mb-3">
+                          <Shield className="w-6 h-6 text-[#2B2B2B]" />
                         </div>
-                        <p className="text-sm text-[#869684]">
+                        <p className="text-sm text-[#2B2B2B]">
                           No claims yet. We'll notify you when someone claims this item.
                         </p>
                       </div>
-                      <Button variant="outline" className="w-full border-[#6db8bb] text-[#05647a]" disabled>
+                      <Button variant="outline" className="w-full border-[#D4D4D4] text-[#2B2B2B]" disabled>
                         No Active Claims
                       </Button>
                     </div>
@@ -151,28 +151,28 @@ export default function ListingDetailPage() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-[#6db8bb]/10 border-[#6db8bb]/30 shadow-sm">
+              <Card className="bg-[#F5F5F5] border-[#D4D4D4] shadow-sm">
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-lg text-[#10375d] flex items-center gap-2">
-                    <Shield className="w-5 h-5 text-[#05647a]" />
+                  <CardTitle className="text-lg text-[#2B2B2B] flex items-center gap-2">
+                    <Shield className="w-5 h-5 text-[#2B2B2B]/70" />
                     Safety Tips
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-2 text-sm text-[#05647a]">
+                <CardContent className="space-y-2 text-sm text-[#2B2B2B]/80">
                   <p className="flex items-start gap-2">
-                    <span className="text-[#10375d]">•</span>
+                    <span className="text-[#2B2B2B]">•</span>
                     Meet in public, well-lit places
                   </p>
                   <p className="flex items-start gap-2">
-                    <span className="text-[#10375d]">•</span>
+                    <span className="text-[#2B2B2B]">•</span>
                     Verify the item with specific details
                   </p>
                   <p className="flex items-start gap-2">
-                    <span className="text-[#10375d]">•</span>
+                    <span className="text-[#2B2B2B]">•</span>
                     Never share personal info upfront
                   </p>
                   <p className="flex items-start gap-2">
-                    <span className="text-[#10375d]">•</span>
+                    <span className="text-[#2B2B2B]">•</span>
                     Report suspicious activity
                   </p>
                 </CardContent>
