@@ -1,26 +1,151 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+
+/* Calmingly Display Font */
+@font-face {
+  font-family: 'Calmingly';
+  src: url('/fonts/Calmingly.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* KhojPayo - Nepal Lost & Found Color Palette */
+/* 
+  Primary Deep Blue: #10375d
+  Secondary Teal: #05647a
+  Accent Teal: #6db8bb
+  Light Background: #e0e2d5
+  Muted Neutral: #869684
+*/
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Font Variables */
+  --font-display: 'Calmingly', cursive;
+  --font-body: var(--font-jakarta), system-ui, sans-serif;
+  
+  /* KhojPayo Color Palette */
+  --kp-primary: #10375d;
+  --kp-secondary: #05647a;
+  --kp-accent: #6db8bb;
+  --kp-background: #6db8bb;
+  --kp-light: #e0e2d5;
+  --kp-muted: #869684;
+  
+  /* Theme Variables mapped to KhojPayo palette */
+  --background: #6db8bb;
+  --foreground: #e0e2d5;
+  --card: #ffffff;
+  --card-foreground: #10375d;
+  --popover: #ffffff;
+  --popover-foreground: #10375d;
+  --primary: #10375d;
+  --primary-foreground: #e0e2d5;
+  --secondary: #05647a;
+  --secondary-foreground: #e0e2d5;
+  --muted: #869684;
+  --muted-foreground: #e0e2d5;
+  --accent: #6db8bb;
+  --accent-foreground: #10375d;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #869684;
+  --input: #ffffff;
+  --ring: #10375d;
+  --chart-1: #10375d;
+  --chart-2: #05647a;
+  --chart-3: #6db8bb;
+  --chart-4: #869684;
+  --chart-5: #e0e2d5;
+  --radius: 0.75rem;
+  --sidebar: #10375d;
+  --sidebar-foreground: #e0e2d5;
+  --sidebar-primary: #6db8bb;
+  --sidebar-primary-foreground: #10375d;
+  --sidebar-accent: #05647a;
+  --sidebar-accent-foreground: #e0e2d5;
+  --sidebar-border: #05647a;
+  --sidebar-ring: #6db8bb;
 }
 
 @theme inline {
+  --font-sans: var(--font-jakarta), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: 'Calmingly', cursive;
+  --font-mono: "Geist Mono", "Geist Mono Fallback", monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  
+  /* KhojPayo custom colors */
+  --color-kp-primary: var(--kp-primary);
+  --color-kp-secondary: var(--kp-secondary);
+  --color-kp-accent: var(--kp-accent);
+  --color-kp-background: var(--kp-background);
+  --color-kp-light: var(--kp-light);
+  --color-kp-muted: var(--kp-muted);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--kp-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--kp-muted);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--kp-secondary);
 }

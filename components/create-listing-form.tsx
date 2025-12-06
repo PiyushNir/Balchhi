@@ -1,0 +1,503 @@
+"use client"
+
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage, FormDescription } from "@/components/ui/form"
+import { Upload, X, MapPin, Calendar, Tag, FileText, Phone, DollarSign } from "lucide-react"
+
+const listingSchema = z.object({
+  title: z.string().min(5, "Title must be at least 5 characters"),
+  category: z.string().min(1, "Select a category"),
+  description: z
+    .string()
+    .min(20, "Description must be at least 20 characters")
+    .max(1000, "Description must be under 1000 characters"),
+  province: z.string().min(1, "Select a province"),
+  district: z.string().min(1, "Select a district"),
+  municipality: z.string().min(1, "Enter municipality/metro"),
+  landmark: z.string().optional(),
+  date: z.string().min(1, "Select the date"),
+  time: z.string().optional(),
+  reward: z.string().optional(),
+  contactPhone: z.string().optional(),
+  contactEmail: z.string().email().optional().or(z.literal('')),
+})
+
+type ListingFormValues = z.infer<typeof listingSchema>
+
+interface CreateListingFormProps {
+  type?: 'lost' | 'found'
+}
+
+const categories = [
+  { id: "electronics", name: "Electronics", nameNe: "इलेक्ट्रोनिक्स" },
+  { id: "documents", name: "Documents", nameNe: "कागजातहरू" },
+  { id: "jewelry", name: "Jewelry", nameNe: "गहना" },
+  { id: "bags", name: "Bags & Luggage", nameNe: "झोला र सामान" },
+  { id: "wallets", name: "Wallets & Purses", nameNe: "वालेट र पर्स" },
+  { id: "keys", name: "Keys", nameNe: "चाबीहरू" },
+  { id: "pets", name: "Pets", nameNe: "पाल्तु जनावर" },
+  { id: "clothing", name: "Clothing", nameNe: "कपडा" },
+  { id: "books", name: "Books & Stationery", nameNe: "किताब र स्टेशनरी" },
+  { id: "sports", name: "Sports Equipment", nameNe: "खेलकुद सामग्री" },
+  { id: "glasses", name: "Glasses & Eyewear", nameNe: "चश्मा" },
+  { id: "other", name: "Other", nameNe: "अन्य" },
+]
+
+const provinces = [
+  "Koshi Pradesh",
+  "Madhesh Pradesh", 
+  "Bagmati Pradesh",
+  "Gandaki Pradesh",
+  "Lumbini Pradesh",
+  "Karnali Pradesh",
+  "Sudurpashchim Pradesh",
+]
+
+const districtsByProvince: Record<string, string[]> = {
+  "Koshi Pradesh": ["Bhojpur", "Dhankuta", "Ilam", "Jhapa", "Khotang", "Morang", "Okhaldhunga", "Panchthar", "Sankhuwasabha", "Solukhumbu", "Sunsari", "Taplejung", "Terhathum", "Udayapur"],
+  "Madhesh Pradesh": ["Bara", "Dhanusha", "Mahottari", "Parsa", "Rautahat", "Saptari", "Sarlahi", "Siraha"],
+  "Bagmati Pradesh": ["Bhaktapur", "Chitwan", "Dhading", "Dolakha", "Kathmandu", "Kavrepalanchok", "Lalitpur", "Makwanpur", "Nuwakot", "Ramechhap", "Rasuwa", "Sindhuli", "Sindhupalchok"],
+  "Gandaki Pradesh": ["Baglung", "Gorkha", "Kaski", "Lamjung", "Manang", "Mustang", "Myagdi", "Nawalpur", "Parbat", "Syangja", "Tanahun"],
+  "Lumbini Pradesh": ["Arghakhanchi", "Banke", "Bardiya", "Dang", "Gulmi", "Kapilvastu", "Palpa", "Parasi", "Pyuthan", "Rolpa", "Rukum East", "Rupandehi"],
+  "Karnali Pradesh": ["Dailekh", "Dolpa", "Humla", "Jajarkot", "Jumla", "Kalikot", "Mugu", "Rukum West", "Salyan", "Surkhet"],
+  "Sudurpashchim Pradesh": ["Achham", "Baitadi", "Bajhang", "Bajura", "Dadeldhura", "Darchula", "Doti", "Kailali", "Kanchanpur"],
+}
+
+export default function CreateListingForm({ type = 'lost' }: CreateListingFormProps) {
+  const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
+  const [images, setImages] = useState<File[]>([])
+  const [imageUrls, setImageUrls] = useState<string[]>([])
+  const [selectedProvince, setSelectedProvince] = useState("")
+
+  const form = useForm<ListingFormValues>({
+    resolver: zodResolver(listingSchema),
+    defaultValues: {
+      title: "",
+      category: "",
+      description: "",
+      province: "",
+      district: "",
+      municipality: "",
+      landmark: "",
+      date: new Date().toISOString().split("T")[0],
+      time: "",
+      reward: "",
+      contactPhone: "",
+      contactEmail: "",
+    },
+  })
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || [])
+    if (files.length + images.length > 5) {
+      alert("Maximum 5 images allowed")
+      return
+    }
+    
+    const newImages = [...images, ...files].slice(0, 5)
+    setImages(newImages)
+    
+    // Create preview URLs
+    const urls = newImages.map(file => URL.createObjectURL(file))
+    setImageUrls(urls)
+  }
+
+  const removeImage = (index: number) => {
+    const newImages = images.filter((_, i) => i !== index)
+    const newUrls = imageUrls.filter((_, i) => i !== index)
+    setImages(newImages)
+    setImageUrls(newUrls)
+  }
+
+  async function onSubmit(values: ListingFormValues) {
+    setIsLoading(true)
+    try {
+      // TODO: Upload images to Supabase Storage
+      // TODO: Create item via API
+      
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+
+      router.push("/dashboard")
+    } catch (error) {
+      console.error("Failed to create listing:", error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        {/* Basic Details */}
+        <div className="space-y-6">
+          <div className="flex items-center gap-3 text-[#10375d]">
+            <Tag className="w-5 h-5" />
+            <h3 className="font-bold text-lg">Basic Details</h3>
+          </div>
+
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-[#10375d]">Item Title</FormLabel>
+                <FormControl>
+                  <Input 
+                    placeholder="e.g., Silver Wedding Ring with Diamond" 
+                    className="border-[#869684]/30 focus:border-[#10375d]"
+                    {...field} 
+                  />
+                </FormControl>
+                <FormDescription className="text-[#869684]">
+                  Be specific about what you {type === 'lost' ? 'lost' : 'found'}
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="category"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-[#10375d]">Category</FormLabel>
+                <FormControl>
+                  <select
+                    {...field}
+                    className="flex h-11 w-full rounded-lg border border-[#869684]/30 bg-white px-4 py-2 text-base focus:outline-none focus:border-[#10375d] focus:ring-2 focus:ring-[#10375d]/20"
+                  >
+                    <option value="">Select a category</option>
+                    {categories.map((cat) => (
+                      <option key={cat.id} value={cat.id}>
+                        {cat.name}
+                      </option>
+                    ))}
+                  </select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        {/* Location */}
+        <div className="space-y-6">
+          <div className="flex items-center gap-3 text-[#10375d]">
+            <MapPin className="w-5 h-5" />
+            <h3 className="font-bold text-lg">Location</h3>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            <FormField
+              control={form.control}
+              name="province"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-[#10375d]">Province</FormLabel>
+                  <FormControl>
+                    <select
+                      {...field}
+                      onChange={(e) => {
+                        field.onChange(e)
+                        setSelectedProvince(e.target.value)
+                        form.setValue('district', '')
+                      }}
+                      className="flex h-11 w-full rounded-lg border border-[#869684]/30 bg-white px-4 py-2 text-base focus:outline-none focus:border-[#10375d] focus:ring-2 focus:ring-[#10375d]/20"
+                    >
+                      <option value="">Select province</option>
+                      {provinces.map((prov) => (
+                        <option key={prov} value={prov}>{prov}</option>
+                      ))}
+                    </select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="district"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-[#10375d]">District</FormLabel>
+                  <FormControl>
+                    <select
+                      {...field}
+                      disabled={!selectedProvince}
+                      className="flex h-11 w-full rounded-lg border border-[#869684]/30 bg-white px-4 py-2 text-base focus:outline-none focus:border-[#10375d] focus:ring-2 focus:ring-[#10375d]/20 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                    >
+                      <option value="">Select district</option>
+                      {selectedProvince && districtsByProvince[selectedProvince]?.map((dist) => (
+                        <option key={dist} value={dist}>{dist}</option>
+                      ))}
+                    </select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            <FormField
+              control={form.control}
+              name="municipality"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-[#10375d]">Municipality / Metro</FormLabel>
+                  <FormControl>
+                    <Input 
+                      placeholder="e.g., Kathmandu Metropolitan City" 
+                      className="border-[#869684]/30 focus:border-[#10375d]"
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="landmark"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-[#10375d]">Landmark (Optional)</FormLabel>
+                  <FormControl>
+                    <Input 
+                      placeholder="e.g., Near Swayambhunath Temple" 
+                      className="border-[#869684]/30 focus:border-[#10375d]"
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+        </div>
+
+        {/* Date & Time */}
+        <div className="space-y-6">
+          <div className="flex items-center gap-3 text-[#10375d]">
+            <Calendar className="w-5 h-5" />
+            <h3 className="font-bold text-lg">When</h3>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            <FormField
+              control={form.control}
+              name="date"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-[#10375d]">
+                    Date {type === 'lost' ? 'Lost' : 'Found'}
+                  </FormLabel>
+                  <FormControl>
+                    <Input 
+                      type="date" 
+                      className="border-[#869684]/30 focus:border-[#10375d]"
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="time"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-[#10375d]">Approximate Time (Optional)</FormLabel>
+                  <FormControl>
+                    <Input 
+                      type="time" 
+                      className="border-[#869684]/30 focus:border-[#10375d]"
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+        </div>
+
+        {/* Description */}
+        <div className="space-y-6">
+          <div className="flex items-center gap-3 text-[#10375d]">
+            <FileText className="w-5 h-5" />
+            <h3 className="font-bold text-lg">Description</h3>
+          </div>
+
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <textarea
+                    placeholder="Describe the item in detail. Include color, size, brand, any unique marks, identifying features, etc."
+                    className="flex min-h-32 w-full rounded-lg border border-[#869684]/30 bg-white px-4 py-3 text-base focus:outline-none focus:border-[#10375d] focus:ring-2 focus:ring-[#10375d]/20 resize-none"
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription className="text-[#869684]">
+                  {field.value.length}/1000 characters
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        {/* Photos */}
+        <div className="space-y-6">
+          <div className="flex items-center gap-3 text-[#10375d]">
+            <Upload className="w-5 h-5" />
+            <h3 className="font-bold text-lg">Photos</h3>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            {imageUrls.map((url, index) => (
+              <div key={index} className="relative aspect-square rounded-lg overflow-hidden bg-[#e0e2d5]">
+                <img src={url} alt={`Upload ${index + 1}`} className="w-full h-full object-cover" />
+                <button
+                  type="button"
+                  onClick={() => removeImage(index)}
+                  className="absolute top-2 right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            ))}
+            
+            {images.length < 5 && (
+              <label className="aspect-square rounded-lg border-2 border-dashed border-[#869684]/30 flex flex-col items-center justify-center cursor-pointer hover:border-[#10375d] hover:bg-[#6db8bb]/10 transition-colors">
+                <Upload className="w-8 h-8 text-[#869684] mb-2" />
+                <span className="text-sm text-[#869684]">Add photo</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  className="hidden"
+                  onChange={handleImageUpload}
+                />
+              </label>
+            )}
+          </div>
+          <p className="text-sm text-[#869684]">
+            Add up to 5 photos to help identify the item
+          </p>
+        </div>
+
+        {/* Contact & Reward */}
+        <div className="space-y-6">
+          <div className="flex items-center gap-3 text-[#10375d]">
+            <Phone className="w-5 h-5" />
+            <h3 className="font-bold text-lg">Contact & Reward</h3>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            <FormField
+              control={form.control}
+              name="contactPhone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-[#10375d]">Phone Number (Optional)</FormLabel>
+                  <FormControl>
+                    <Input 
+                      type="tel"
+                      placeholder="+977 98XXXXXXXX" 
+                      className="border-[#869684]/30 focus:border-[#10375d]"
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="contactEmail"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-[#10375d]">Email (Optional)</FormLabel>
+                  <FormControl>
+                    <Input 
+                      type="email"
+                      placeholder="your@email.com" 
+                      className="border-[#869684]/30 focus:border-[#10375d]"
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          {type === 'lost' && (
+            <FormField
+              control={form.control}
+              name="reward"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-[#10375d]">
+                    <div className="flex items-center gap-2">
+                      <DollarSign className="w-4 h-4" />
+                      Reward Amount (Optional)
+                    </div>
+                  </FormLabel>
+                  <FormControl>
+                    <Input 
+                      type="number"
+                      placeholder="NPR 500" 
+                      className="border-[#869684]/30 focus:border-[#10375d]"
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormDescription className="text-[#869684]">
+                    Offer a reward to encourage the finder
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
+        </div>
+
+        {/* Submit */}
+        <div className="flex gap-4 pt-4">
+          <Button 
+            type="button" 
+            variant="outline" 
+            onClick={() => router.back()}
+            className="border-[#869684] text-[#869684] hover:bg-[#e0e2d5]"
+          >
+            Cancel
+          </Button>
+          <Button 
+            type="submit" 
+            disabled={isLoading} 
+            className="flex-1 bg-[#10375d] hover:bg-[#10375d]/90 text-[#e0e2d5]"
+          >
+            {isLoading ? "Creating..." : `Post ${type === 'lost' ? 'Lost' : 'Found'} Item`}
+          </Button>
+        </div>
+      </form>
+    </Form>
+  )
+}
