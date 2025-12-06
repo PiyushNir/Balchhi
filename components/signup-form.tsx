@@ -50,15 +50,18 @@ export default function SignupForm() {
     setIsLoading(true)
     try {
       await signup(values.email, values.password, values.name, values.role as UserRole)
+      
       toast({
         title: "Success",
-        description: "Account created successfully",
+        description: "Account created successfully!",
       })
       router.push("/dashboard")
     } catch (error) {
+      console.error("Signup error:", error)
+      const errorMessage = error instanceof Error ? error.message : "Failed to create account. Please try again."
       toast({
         title: "Error",
-        description: "Failed to create account. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       })
     } finally {
